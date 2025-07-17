@@ -1,0 +1,113 @@
+<!-- Prompt — Modular Algorithm Visualisation Platform (All Algorithms Included)
+
+You are a senior frontend engineer refining a scalable educational visualisation platform. This React-based system allows users to step through the internal logic of various algorithms — from sorting to graph traversal and tree manipulation — using animated frames and interactive controls.
+
+The platform should be responsive, readable, and extensible. Users should be able to input custom data, select an algorithm, and watch it evolve step by step with clear visual feedback.
+
+Your Responsibilities are so skeletonise this program, build it up
+---
+
+### 🎯 System Goals
+
+- ✅ Convert algorithm logic into reusable animation frames (step-by-step visuals)
+- ✅ Animate comparisons, swaps, insertions, traversals
+- ✅ Give users full control via play/pause/step buttons and a speed slider
+- ✅ Support expansion: easily drop in Merge Sort, BFS, DFS, etc
+- ✅ Keep visuals clean and styles readable (dark theme, spacing, transitions)
+
+---
+
+### 📁 Project Folder Structure
+
+```plaintext
+AlgorVis/
+└── src/
+    ├── App.js                        # Main controller — handles input, state, animation
+    ├── index.css                     # Global styles: layout, typography, glow effects
+    ├── algorithms/                   # Frame generators per algorithm
+    │   ├── bubbleSort.js
+    │   ├── mergeSort.js
+    │   ├── quickSort.js
+    │   ├── bfs.js
+    │   ├── dfs.js
+    │   └── treeOps.js
+    └── components/                   # UI + visual building blocks
+        ├── Canvas.jsx               # Renders nodes, arrows, layout per frame
+        ├── Node.jsx                 # Shows individual elements (value, highlight, animation)
+        ├── Controls.jsx             # Play/pause/step buttons, speed slider
+        └── InputPanel.jsx           # User input area: array field, algorithm picker, randomize
+```
+
+---
+
+### 📦 Responsibilities Per File
+
+#### `App.js`
+- Stores global state:
+  - `selectedAlgorithm`, `frameIndex`, `isPlaying`, `inputArray`, `speedMs`
+- Imports logic from `algorithms/`
+- Renders layout using `<InputPanel />`, `<Canvas />`, and `<Controls />`
+- Handles frame progression and resets
+
+#### `index.css`
+- Dark theme + responsive layout
+- Node styling:
+  - `.node`, `.highlighted`, `.swapped`, `.sorted`
+- Smooth transitions:
+  - use `transform`, `opacity`, `box-shadow`
+- Button and input styles
+
+#### `algorithms/*.js`
+Each exports a function:
+```js
+generateFrames(input: any): Frame[]
+```
+Returns a list of frame objects like:
+```js
+{
+  array: [...],
+  highlight: [i, j],
+  swapped: true,
+  metadata: {...}
+}
+```
+Sorting = animate swaps  
+TreeOps = show rebalancing  
+Graphs = show visits, edges, queues
+
+#### `Canvas.jsx`
+- Receives `frames[frameIndex]`
+- Renders layout based on `selectedAlgorithm`
+- Applies conditional styling (`highlight`, `swapped`)
+- May conditionally use grid, graph, or tree layout
+
+#### `Node.jsx`
+- Displays one visual unit: array item, tree node, graph node
+- Applies animation classes (pulse, glow, expand)
+- Tooltip: value, position, status
+
+#### `Controls.jsx`
+- Play / Pause / Step Forward / Step Back / Speed Slider
+- Hooks into `App.js` callbacks to update frame index and playback
+
+#### `InputPanel.jsx`
+- Input field to enter array
+- Dropdown to select algorithm
+- “Randomize” button
+- Form validation (e.g. integers only, max length)
+
+---
+
+### 🧪 Expectations from DeepSeek
+
+- Implement multiple frame generators
+  - Bubble Sort, Merge Sort, Quick Sort, BFS, DFS, TreeOps
+- Refactor all files for modularity, clarity, and animation consistency
+- Improve layout so node canvas is dominant, and controls/input aren’t cramped
+- Avoid duplicate logic across algorithms
+- Add hover effects, glow transitions, and step counter indicators
+- Make control system responsive and accessible
+
+---
+
+Let me know when you paste this in — or if you want me to generate initial `App.js`, `index.css`, and one starter algorithm file (`bubbleSort.js`) to jumpstart your dev loop right now ⚡🧩 -->
