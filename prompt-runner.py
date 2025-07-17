@@ -8,10 +8,10 @@ ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 
 # === 🗂️ Project Files to Submit ===
 INPUT_FILES = [
-    "Algorvis/promptfile.txt"
+    "AlgorVis/promptfile.txt"
 ]
 
-OUTPUT_FILE = "Algorvis/promptfile.txt"
+OUTPUT_FILE = "AlgorVis/promptfile.txt"
 
 # === 📦 Load Code from Files ===
 def load_files(file_paths):
