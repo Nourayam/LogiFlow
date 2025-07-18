@@ -7,11 +7,14 @@ MODEL = "deepseek-chat"
 ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 
 # === 🗂️ Project Files to Submit ===
-INPUT_FILES = [
-    "AlgorVis/promptfile.txt"
+INPUT_FILE = [
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/promptfile.txt"
 ]
 
-OUTPUT_FILE = "AlgorVis/promptfile.txt"
+OUTPUT_FILE = [
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/promptfile.txt"
+]
+
 
 # === 📦 Load Code from Files ===
 def load_files(file_paths):

@@ -1,4 +1,4 @@
-<!-- Prompt — Modular Algorithm Visualisation Platform (All Algorithms Included)
+Prompt — Modular Algorithm Visualisation Platform (All Algorithms Included)
 
 You are a senior frontend engineer refining a scalable educational visualisation platform. This React-based system allows users to step through the internal logic of various algorithms — from sorting to graph traversal and tree manipulation — using animated frames and interactive controls.
 
@@ -107,7 +107,3 @@ Graphs = show visits, edges, queues
 - Avoid duplicate logic across algorithms
 - Add hover effects, glow transitions, and step counter indicators
 - Make control system responsive and accessible
-
----
-
-Let me know when you paste this in — or if you want me to generate initial `App.js`, `index.css`, and one starter algorithm file (`bubbleSort.js`) to jumpstart your dev loop right now ⚡🧩 -->
