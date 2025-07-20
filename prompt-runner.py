@@ -16,7 +16,9 @@ INPUT_FILES = [
     "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Controls.jsx",
     "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/InputPanel.jsx",
     "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/bubbleSort.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/mergeSort.js"
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/mergeSort.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/utils/validateFrames.js"
+
 ]
 
 OUTPUT_FILE = "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/deepseek_output.txt"

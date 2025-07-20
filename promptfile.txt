@@ -1,71 +1,59 @@
-Final Integration Pass for Run-Ready Algorithm Visualisation Platform
+Integrate Final Feature Enhancements & User Experience Polish
 
-You’re acting as a senior frontend engineer finalising the implementation of an educational React platform that visually simulates multiple algorithms, including Bubble Sort, Merge Sort, Quick Sort, BFS, DFS, and tree operations.
+You previously implemented the core architecture of a React-based algorithm visualisation platform. This follow-up prompt outlines final refinements and UX-focused improvements to ensure production readiness and educational clarity.
 
-The project skeleton is complete. Your task is to ensure the entire system is **run-ready**, meaning the user can load the page, input data, select an algorithm, press play, and see accurate, smooth, animated output.
-
----
-
-🎯 Objectives
-
-- Finalise all wiring so the platform runs out-of-the-box without silent errors
-- Ensure each algorithm generator returns frame-by-frame visual states
-- Hook up user input correctly to algorithm selection
-- Wire controls (play, pause, step, speed) to animation state and transitions
-- Make visual output readable and aesthetically clean on load
-- Sync animations and state progression cleanly
-- Use British spelling in any labels, comments or variables
+Please update or supplement the existing implementation with the following features and improvements:
 
 ---
 
-📁 Key Components
+🎯 Functionality Additions
 
-- `App.js`: Should fully orchestrate playback, frame progression, and component data flow
-- `InputPanel.jsx`: Connect input array and dropdown to selected algorithm and trigger frame generation
-- `Controls.jsx`: Buttons should alter `frameIndex`, with optional auto-play loop based on `isPlaying` and `speed`
-- `Canvas.jsx`: Must correctly render visual elements and animate swaps/comparisons/traversals
-- `Node.jsx`: Should apply highlight/swap/glow styles conditionally based on frame metadata
-- `algorithms/*.js`: Ensure each returns a consistent frame schema and handles edge cases gracefully
+1. **Loading States**
+   - Display a loader or spinner while frame generation is in progress.
+   - Disable controls until frames are ready.
 
----
+2. **Algorithm Descriptions**
+   - Add brief educational blurbs per algorithm, visible in a description box or tooltip.
+   - Include space and time complexity using British spelling conventions.
 
-📦 Frame Format Example
+3. **Keyboard Shortcuts**
+   - Add global key bindings:  
+     - `Space` to play/pause  
+     - `ArrowRight` to step forward  
+     - `ArrowLeft` to step backward
 
-Each step must return a consistent object structure:
+4. **Export/Import Visualisation State**
+   - Enable saving current progress as JSON or state snapshot.
+   - Implement a way to reload it into the canvas for review.
 
-```js
-{
-  array: [...],                 // For sorting
-  highlight: [i, j],            // Indices being compared
-  swapped: true,                // If a swap occurred
-  visited: [...],               // For BFS/DFS
-  metadata: {...},              // Optional labels (e.g., sortedUntil)
-}
-```
-
-These frames must drive the visualisation canvas without conflict or missing data.
+5. **Testing**
+   - Add unit tests for each algorithm’s frame generator logic.
+   - Add integration tests for control interactions and rendering flow.
 
 ---
 
-🎨 Style & UX Goals
+✅ Final Deployment Checklist
 
-- Responsive layout that centres canvas and separates controls from clutter
-- Animation timing based on `speed` state (e.g. 300ms to 1500ms)
-- Control panel should display “Step X of Y”
-- Input panel validates and parses arrays properly
-- Visual states animate: comparisons pulse, swaps glow, sorted elements fade gently
+Please ensure the following are verified in implementation or covered via error-safe logic:
 
----
-
-🧪 Developer Notes
-
-- Ensure `App.js` uses hooks cleanly: `useState`, `useEffect`, etc.
-- Add fallback handling for invalid input or empty array
-- Algorithm modules should have pure logic and no side effects
-- Use comments with British spelling
-- Prefer `className` logic over inline styles for styling transitions
+- All core algorithms function correctly: Bubble Sort, Merge Sort, Quick Sort, BFS, DFS, TreeOps
+- Edge cases handled: empty array, single element, duplicates, already sorted, reverse sorted
+- Responsive layout renders appropriately on:
+   - Mobile viewports
+   - Tablet dimensions
+   - Desktop viewports
+- Performance scales with large arrays (100+ items) or dense graphs
+- Accessibility support:
+   - Keyboard navigation
+   - Screen reader readability
+   - Sufficient colour contrast
 
 ---
 
-This project is designed to be educational, modular, and visually elegant. Please ensure the system is cohesive, responsive, and free of runtime faults. Refactor or fill in implementation gaps as needed to ensure visual playback functions immediately.
-```
+🧪 Notes
+
+- Any new components or logic should align with existing modular design.
+- Use British spelling in all user-facing labels and comments.
+- Prefer using reusable hooks or context state where applicable.
+
+This update should ensure the visualiser is polished for live demos, portfolio showcases, and educational use.
