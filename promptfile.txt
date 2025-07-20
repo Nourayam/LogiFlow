@@ -1,109 +1,71 @@
-Prompt — Modular Algorithm Visualisation Platform (All Algorithms Included)
+Final Integration Pass for Run-Ready Algorithm Visualisation Platform
 
-You are a senior frontend engineer refining a scalable educational visualisation platform. This React-based system allows users to step through the internal logic of various algorithms — from sorting to graph traversal and tree manipulation — using animated frames and interactive controls.
+You’re acting as a senior frontend engineer finalising the implementation of an educational React platform that visually simulates multiple algorithms, including Bubble Sort, Merge Sort, Quick Sort, BFS, DFS, and tree operations.
 
-The platform should be responsive, readable, and extensible. Users should be able to input custom data, select an algorithm, and watch it evolve step by step with clear visual feedback.
-
-Your Responsibilities are so skeletonise this program, build it up
----
-
-### 🎯 System Goals
-
-- ✅ Convert algorithm logic into reusable animation frames (step-by-step visuals)
-- ✅ Animate comparisons, swaps, insertions, traversals
-- ✅ Give users full control via play/pause/step buttons and a speed slider
-- ✅ Support expansion: easily drop in Merge Sort, BFS, DFS, etc
-- ✅ Keep visuals clean and styles readable (dark theme, spacing, transitions)
+The project skeleton is complete. Your task is to ensure the entire system is **run-ready**, meaning the user can load the page, input data, select an algorithm, press play, and see accurate, smooth, animated output.
 
 ---
 
-### 📁 Project Folder Structure
+🎯 Objectives
 
-```plaintext
-AlgorVis/
-└── src/
-    ├── App.js                        # Main controller — handles input, state, animation
-    ├── index.css                     # Global styles: layout, typography, glow effects
-    ├── algorithms/                   # Frame generators per algorithm
-    │   ├── bubbleSort.js
-    │   ├── mergeSort.js
-    │   ├── quickSort.js
-    │   ├── bfs.js
-    │   ├── dfs.js
-    │   └── treeOps.js
-    └── components/                   # UI + visual building blocks
-        ├── Canvas.jsx               # Renders nodes, arrows, layout per frame
-        ├── Node.jsx                 # Shows individual elements (value, highlight, animation)
-        ├── Controls.jsx             # Play/pause/step buttons, speed slider
-        └── InputPanel.jsx           # User input area: array field, algorithm picker, randomize
-```
+- Finalise all wiring so the platform runs out-of-the-box without silent errors
+- Ensure each algorithm generator returns frame-by-frame visual states
+- Hook up user input correctly to algorithm selection
+- Wire controls (play, pause, step, speed) to animation state and transitions
+- Make visual output readable and aesthetically clean on load
+- Sync animations and state progression cleanly
+- Use British spelling in any labels, comments or variables
 
 ---
 
-### 📦 Responsibilities Per File
+📁 Key Components
 
-#### `App.js`
-- Stores global state:
-  - `selectedAlgorithm`, `frameIndex`, `isPlaying`, `inputArray`, `speedMs`
-- Imports logic from `algorithms/`
-- Renders layout using `<InputPanel />`, `<Canvas />`, and `<Controls />`
-- Handles frame progression and resets
+- `App.js`: Should fully orchestrate playback, frame progression, and component data flow
+- `InputPanel.jsx`: Connect input array and dropdown to selected algorithm and trigger frame generation
+- `Controls.jsx`: Buttons should alter `frameIndex`, with optional auto-play loop based on `isPlaying` and `speed`
+- `Canvas.jsx`: Must correctly render visual elements and animate swaps/comparisons/traversals
+- `Node.jsx`: Should apply highlight/swap/glow styles conditionally based on frame metadata
+- `algorithms/*.js`: Ensure each returns a consistent frame schema and handles edge cases gracefully
 
-#### `index.css`
-- Dark theme + responsive layout
-- Node styling:
-  - `.node`, `.highlighted`, `.swapped`, `.sorted`
-- Smooth transitions:
-  - use `transform`, `opacity`, `box-shadow`
-- Button and input styles
+---
 
-#### `algorithms/*.js`
-Each exports a function:
-```js
-generateFrames(input: any): Frame[]
-```
-Returns a list of frame objects like:
+📦 Frame Format Example
+
+Each step must return a consistent object structure:
+
 ```js
 {
-  array: [...],
-  highlight: [i, j],
-  swapped: true,
-  metadata: {...}
+  array: [...],                 // For sorting
+  highlight: [i, j],            // Indices being compared
+  swapped: true,                // If a swap occurred
+  visited: [...],               // For BFS/DFS
+  metadata: {...},              // Optional labels (e.g., sortedUntil)
 }
 ```
-Sorting = animate swaps  
-TreeOps = show rebalancing  
-Graphs = show visits, edges, queues
 
-#### `Canvas.jsx`
-- Receives `frames[frameIndex]`
-- Renders layout based on `selectedAlgorithm`
-- Applies conditional styling (`highlight`, `swapped`)
-- May conditionally use grid, graph, or tree layout
-
-#### `Node.jsx`
-- Displays one visual unit: array item, tree node, graph node
-- Applies animation classes (pulse, glow, expand)
-- Tooltip: value, position, status
-
-#### `Controls.jsx`
-- Play / Pause / Step Forward / Step Back / Speed Slider
-- Hooks into `App.js` callbacks to update frame index and playback
-
-#### `InputPanel.jsx`
-- Input field to enter array
-- Dropdown to select algorithm
-- “Randomize” button
-- Form validation (e.g. integers only, max length)
+These frames must drive the visualisation canvas without conflict or missing data.
 
 ---
 
-### 🧪 Expectations from DeepSeek
+🎨 Style & UX Goals
 
-- Implement multiple frame generators
-  - Bubble Sort, Merge Sort, Quick Sort, BFS, DFS, TreeOps
-- Refactor all files for modularity, clarity, and animation consistency
-- Improve layout so node canvas is dominant, and controls/input aren’t cramped
-- Avoid duplicate logic across algorithms
-- Add hover effects, glow transitions, and step counter indicators
-- Make control system responsive and accessible
+- Responsive layout that centres canvas and separates controls from clutter
+- Animation timing based on `speed` state (e.g. 300ms to 1500ms)
+- Control panel should display “Step X of Y”
+- Input panel validates and parses arrays properly
+- Visual states animate: comparisons pulse, swaps glow, sorted elements fade gently
+
+---
+
+🧪 Developer Notes
+
+- Ensure `App.js` uses hooks cleanly: `useState`, `useEffect`, etc.
+- Add fallback handling for invalid input or empty array
+- Algorithm modules should have pure logic and no side effects
+- Use comments with British spelling
+- Prefer `className` logic over inline styles for styling transitions
+
+---
+
+This project is designed to be educational, modular, and visually elegant. Please ensure the system is cohesive, responsive, and free of runtime faults. Refactor or fill in implementation gaps as needed to ensure visual playback functions immediately.
+```

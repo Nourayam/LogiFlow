@@ -6,44 +6,52 @@ API_KEY = os.getenv("DEEPSEEK_API_KEY", "sk-1d543ab9361542a4a0596e6b85fc715e")
 MODEL = "deepseek-chat"
 ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 
-# === 🗂️ Project Files to Submit ===
-INPUT_FILE = [
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/promptfile.txt"
+# === 🗂️ File Paths ===
+INPUT_FILES = [
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/promptfile.txt",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/App.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/index.css",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Canvas.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Node.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Controls.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/InputPanel.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/bubbleSort.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/mergeSort.js"
 ]
 
-OUTPUT_FILE = [
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/promptfile.txt"
-]
+OUTPUT_FILE = "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/deepseek_output.txt"
 
-
-# === 📦 Load Code from Files ===
-def load_files(file_paths):
+# === 📦 Load Prompt ===
+# === 📦 Load Multiple Files ===
+def load_files(paths):
     combined_text = ""
-    for path in file_paths:
+    for path in paths:
         if not os.path.isfile(path):
             print(f"⚠️ Missing file: {path}")
             continue
         with open(path, "r", encoding="utf-8") as f:
             combined_text += f"\n# ==== FILE: {path} ====\n"
-            combined_text += f.read() + "\n"
+            combined_text += f.read().strip() + "\n\n"
     return combined_text.strip()
 
-# === 🧠 Create Refactoring Prompt ===
-code_context = load_files(INPUT_FILES)
-if not code_context:
-    raise ValueError("No valid input files loaded — check your paths.")
 
-prompt = (
-    "You are a helpful assistant that always responds in English and returns clean, production-quality Python.\n"
-    "Please review and refactor this code:\n\n" + code_context
-)
+# === 🧠 Build Payload ===
+prompt_text = load_files(INPUT_FILES)
 
-# === 📬 Compose Request Payload ===
 payload = {
     "model": MODEL,
     "temperature": 0.2,
     "messages": [
-        {"role": "user", "content": prompt}
+        {
+            "role": "system",
+            "content": (
+                "You are a helpful assistant that always responds in English and returns clean, production-quality code."
+            )
+        },
+        {
+            "role": "user",
+            "content": prompt_text
+        }
     ]
 }
 
@@ -52,22 +60,23 @@ headers = {
     "Content-Type": "application/json"
 }
 
-# === 🚀 Send Request to DeepSeek ===
-print("📡 Sending prompt to DeepSeek...\n")
+# === 🚀 Send Request ===
+print(f"📡 Sending prompt from: {INPUT_FILES}")
 response = requests.post(ENDPOINT, headers=headers, json=payload)
 
-# === 📥 Handle the Response ===
+# === 📥 Handle Response ===
 if response.status_code == 200:
     try:
-        result_text = response.json()["choices"][0]["message"]["content"]
+        result = response.json()["choices"][0]["message"]["content"]
     except (KeyError, IndexError):
-        raise ValueError("Invalid response format from DeepSeek.")
+        raise ValueError("⚠️ Invalid response format from DeepSeek.")
 
-    print("✅ Received response:\n")
-    print(result_text[:1000] + "\n...")  # Preview output
+    print("✅ Preview of DeepSeek response:\n")
+    print(result[:1000] + "\n...")
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write(result_text)
-    print(f"📁 Response saved to: {OUTPUT_FILE}")
+        f.write(result)
+
+    print(f"📁 Saved full response to: {OUTPUT_FILE}")
 else:
     print(f"❌ API Error {response.status_code}:\n{response.text}")
