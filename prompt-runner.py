@@ -17,7 +17,8 @@ INPUT_FILES = [
     "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/InputPanel.jsx",
     "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/bubbleSort.js",
     "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/mergeSort.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/utils/validateFrames.js"
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/utils/validateFrames.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/utils/algorithmInfo.js"
 
 ]
 

@@ -126,6 +126,23 @@ h1 {
   flex-wrap: wrap;
 }
 
+/* Add responsive styles */
+@media (max-width: 768px) {
+  .buttons-container button {
+    flex: 1 1 40%;
+  }
+  
+  .algorithm-info {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .buttons-container button {
+    flex: 1 1 100%;
+  }
+}
+
 button {
   background-color: var(--secondary-color);
   color: white;
@@ -196,4 +213,47 @@ select {
   .main-container {
     grid-template-columns: 1fr;
   }
+}
+
+.loader {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color);
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.algorithm-info {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.algorithm-info p {
+  margin-bottom: 0.5rem;
+}
+
+.complexity-info {
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.complexity-info ul {
+  margin: 0.3rem 0;
+  padding-left: 1.2rem;
+}
+
+.complexity-info span {
+  font-weight: bold;
 }
