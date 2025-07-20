@@ -8,6 +8,7 @@ import * as treeOps from './algorithms/treeOps';
 import Canvas from './components/Canvas';
 import Controls from './components/Controls';
 import InputPanel from './components/InputPanel';
+import { ALGORITHM_INFO } from './utils/algorithmInfo';
 import './index.css';
 
 const ALGORITHMS = {
@@ -26,34 +27,42 @@ function App() {
   const [frameIndex, setFrameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [speedMs, setSpeedMs] = useState(500);
+  const [isGeneratingFrames, setIsGeneratingFrames] = useState(false);
+  const [exportData, setExportData] = useState(null);
 
-
-// Generate frames with error handling
+  // Generate frames with error handling
   useEffect(() => {
-    try {
-      const algorithm = ALGORITHMS[selectedAlgorithm];
-      if (algorithm?.generateFrames) {
-        const newFrames = algorithm.generateFrames(inputArray);
-        if (!newFrames || newFrames.length === 0) {
-          throw new Error('Algorithm returned no frames');
+    const generateFrames = async () => {
+      try {
+        setIsGeneratingFrames(true);
+        const algorithm = ALGORITHMS[selectedAlgorithm];
+        if (algorithm?.generateFrames) {
+          const newFrames = algorithm.generateFrames(inputArray);
+          if (!newFrames || newFrames.length === 0) {
+            throw new Error('Algorithm returned no frames');
+          }
+          setFrames(newFrames);
+          setFrameIndex(0);
+          setIsPlaying(false);
         }
-        setFrames(newFrames);
-        setFrameIndex(0);
-        setIsPlaying(false);
+      } catch (error) {
+        console.error('Frame generation error:', error);
+        setFrames([{
+          array: inputArray,
+          highlight: [],
+          swapped: false,
+          sortedIndices: [],
+          description: `Error: ${error.message}`
+        }]);
+      } finally {
+        setIsGeneratingFrames(false);
       }
-    } catch (error) {
-      console.error('Frame generation error:', error);
-      setFrames([{
-        array: inputArray,
-        highlight: [],
-        swapped: false,
-        sortedIndices: [],
-        description: `Error: ${error.message}`
-      }]);
-    }
+    };
+
+    generateFrames();
   }, [selectedAlgorithm, inputArray]);
 
-  // Safer animation handling
+  // Animation handling
   useEffect(() => {
     if (!isPlaying || frames.length === 0) return;
 
@@ -68,30 +77,81 @@ function App() {
     return () => clearTimeout(timer);
   }, [isPlaying, frameIndex, frames, speedMs]);
 
-  const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        handlePlayPause();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        handleStepForward();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        handleStepBackward();
+      }
+    };
 
-  const handleStepForward = () => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isPlaying, frameIndex, frames]);
+
+  const handlePlayPause = useCallback(() => {
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
+
+  const handleStepForward = useCallback(() => {
     if (frameIndex < frames.length - 1) {
       setFrameIndex(frameIndex + 1);
     }
-  };
+  }, [frameIndex, frames]);
 
-  const handleStepBackward = () => {
+  const handleStepBackward = useCallback(() => {
     if (frameIndex > 0) {
       setFrameIndex(frameIndex - 1);
     }
-  };
+  }, [frameIndex]);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     setFrameIndex(0);
     setIsPlaying(false);
-  };
+  }, []);
 
-  const handleSpeedChange = (e) => {
+  const handleSpeedChange = useCallback((e) => {
     setSpeedMs(1000 - e.target.value);
-  };
+  }, []);
+
+  const handleExport = useCallback(() => {
+    const data = {
+      algorithm: selectedAlgorithm,
+      inputArray,
+      frames,
+      currentFrame: frameIndex,
+      speed: speedMs,
+      timestamp: new Date().toISOString()
+    };
+    const json = JSON.stringify(data);
+    setExportData(json);
+    navigator.clipboard.writeText(json).then(() => {
+      alert('Visualisation state copied to clipboard!');
+    });
+  }, [selectedAlgorithm, inputArray, frames, frameIndex, speedMs]);
+
+  const handleImport = useCallback(() => {
+    try {
+      const json = prompt('Paste the exported visualisation state:');
+      if (!json) return;
+      
+      const data = JSON.parse(json);
+      setSelectedAlgorithm(data.algorithm);
+      setInputArray(data.inputArray);
+      setFrames(data.frames);
+      setFrameIndex(data.currentFrame);
+      setSpeedMs(data.speed);
+    } catch (error) {
+      alert('Failed to import visualisation state: ' + error.message);
+    }
+  }, []);
 
   return (
     <div className="app">
@@ -102,12 +162,15 @@ function App() {
           setSelectedAlgorithm={setSelectedAlgorithm}
           inputArray={inputArray}
           setInputArray={setInputArray}
+          algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
+          isGeneratingFrames={isGeneratingFrames}
         />
         <Canvas
           frame={frames[frameIndex] || {}}
           algorithm={selectedAlgorithm}
           frameIndex={frameIndex}
           totalFrames={frames.length}
+          algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
         />
         <Controls
           isPlaying={isPlaying}
@@ -119,6 +182,9 @@ function App() {
           onSpeedChange={handleSpeedChange}
           frameIndex={frameIndex}
           totalFrames={frames.length}
+          onExport={handleExport}
+          onImport={handleImport}
+          isGeneratingFrames={isGeneratingFrames}
         />
       </div>
     </div>
