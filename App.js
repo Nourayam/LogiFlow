@@ -9,6 +9,8 @@ import Canvas from './components/Canvas';
 import Controls from './components/Controls';
 import InputPanel from './components/InputPanel';
 import { ALGORITHM_INFO } from './utils/algorithmInfo';
+import { validateFrames } from './utils/validateFrames';
+import Loader from './components/Loader';
 import './index.css';
 
 const ALGORITHMS = {
@@ -29,24 +31,33 @@ function App() {
   const [speedMs, setSpeedMs] = useState(500);
   const [isGeneratingFrames, setIsGeneratingFrames] = useState(false);
   const [exportData, setExportData] = useState(null);
+  const [error, setError] = useState(null);
 
-  // Generate frames with error handling
+  // Generate frames with enhanced error handling
   useEffect(() => {
     const generateFrames = async () => {
       try {
         setIsGeneratingFrames(true);
+        setError(null);
         const algorithm = ALGORITHMS[selectedAlgorithm];
-        if (algorithm?.generateFrames) {
-          const newFrames = algorithm.generateFrames(inputArray);
-          if (!newFrames || newFrames.length === 0) {
-            throw new Error('Algorithm returned no frames');
-          }
-          setFrames(newFrames);
-          setFrameIndex(0);
-          setIsPlaying(false);
+        
+        if (!algorithm?.generateFrames) {
+          throw new Error('Selected algorithm not implemented');
         }
+
+        const newFrames = algorithm.generateFrames(inputArray);
+        if (!newFrames || newFrames.length === 0) {
+          throw new Error('Algorithm returned no frames');
+        }
+
+        // Validate frames before setting them
+        const validatedFrames = validateFrames(newFrames, selectedAlgorithm);
+        setFrames(validatedFrames);
+        setFrameIndex(0);
+        setIsPlaying(false);
       } catch (error) {
         console.error('Frame generation error:', error);
+        setError(error.message);
         setFrames([{
           array: inputArray,
           highlight: [],
@@ -122,19 +133,26 @@ function App() {
   }, []);
 
   const handleExport = useCallback(() => {
-    const data = {
-      algorithm: selectedAlgorithm,
-      inputArray,
-      frames,
-      currentFrame: frameIndex,
-      speed: speedMs,
-      timestamp: new Date().toISOString()
-    };
-    const json = JSON.stringify(data);
-    setExportData(json);
-    navigator.clipboard.writeText(json).then(() => {
-      alert('Visualisation state copied to clipboard!');
-    });
+    try {
+      const data = {
+        algorithm: selectedAlgorithm,
+        inputArray,
+        frames,
+        currentFrame: frameIndex,
+        speed: speedMs,
+        timestamp: new Date().toISOString(),
+        version: '1.0'
+      };
+      const json = JSON.stringify(data);
+      setExportData(json);
+      navigator.clipboard.writeText(json).then(() => {
+        alert('Visualisation state copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy to clipboard. Please try again.');
+      });
+    } catch (error) {
+      alert('Export failed: ' + error.message);
+    }
   }, [selectedAlgorithm, inputArray, frames, frameIndex, speedMs]);
 
   const handleImport = useCallback(() => {
@@ -143,11 +161,15 @@ function App() {
       if (!json) return;
       
       const data = JSON.parse(json);
+      if (!data.algorithm || !data.inputArray || !data.frames) {
+        throw new Error('Invalid visualisation state format');
+      }
+
       setSelectedAlgorithm(data.algorithm);
       setInputArray(data.inputArray);
       setFrames(data.frames);
-      setFrameIndex(data.currentFrame);
-      setSpeedMs(data.speed);
+      setFrameIndex(data.currentFrame || 0);
+      setSpeedMs(data.speed || 500);
     } catch (error) {
       alert('Failed to import visualisation state: ' + error.message);
     }
@@ -155,7 +177,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Algorithm Visualizer</h1>
+      <h1>Algorithm Visualiser</h1>
       <div className="main-container">
         <InputPanel
           selectedAlgorithm={selectedAlgorithm}
@@ -165,13 +187,23 @@ function App() {
           algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
           isGeneratingFrames={isGeneratingFrames}
         />
-        <Canvas
-          frame={frames[frameIndex] || {}}
-          algorithm={selectedAlgorithm}
-          frameIndex={frameIndex}
-          totalFrames={frames.length}
-          algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
-        />
+        
+        {isGeneratingFrames ? (
+          <div className="loading-overlay">
+            <Loader />
+            <p>Generating visualisation frames...</p>
+          </div>
+        ) : (
+          <Canvas
+            frame={frames[frameIndex] || {}}
+            algorithm={selectedAlgorithm}
+            frameIndex={frameIndex}
+            totalFrames={frames.length}
+            algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
+            error={error}
+          />
+        )}
+        
         <Controls
           isPlaying={isPlaying}
           onPlayPause={handlePlayPause}
