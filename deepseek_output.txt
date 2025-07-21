@@ -1,425 +1,66 @@
-# Algorithm Visualizer Project Guide
+Based on your description and the code you've shared, it seems like your algorithm visualization app isn't displaying properly. Let me help you troubleshoot this:
 
-## What This Program Does
+1. First Issue - File Path Mismatch:
+   - You mentioned seeing a Vite + React page with just a counter
+   - Looking at your files, I notice you have `App.js` but in a Vite + React project, the main file should typically be `App.jsx`
+   - The counter you're seeing is likely from a default Vite template
 
-This is an interactive algorithm visualization tool that helps you understand how different algorithms work by showing step-by-step execution. It currently includes:
+2. Solution Steps:
 
-1. **Sorting Algorithms**:
-   - Bubble Sort
-   - Merge Sort
-   - Quick Sort (implementation missing)
-
-2. **Graph Algorithms**:
-   - Breadth-First Search (BFS)
-   - Depth-First Search (DFS)
-   - Binary Tree Operations
-
-The visualizer shows:
-- The current state of the data structure
-- Highlighted elements being compared/processed
-- Step-by-step explanations
-- Algorithm complexity information
-- Animation controls (play/pause, step forward/backward)
-
-## Missing Algorithm Implementations
-
-I notice the following algorithms are imported but their implementation files are missing:
-- `quickSort.js`
-- `bfs.js`
-- `dfs.js`
-- `treeOps.js`
-
-Here are the implementations for these missing files:
-
-### `quickSort.js`
-```javascript
-export function generateFrames(array) {
-  const frames = [];
-  const arr = [...array];
-  const n = arr.length;
-
-  // Initial state
-  frames.push({
-    array: [...arr],
-    highlight: [],
-    swapped: false,
-    sortedIndices: [],
-    description: "Starting Quick Sort (Divide and Conquer)"
-  });
-
-  function quickSort(start, end) {
-    if (start >= end) return;
-
-    const pivotIndex = partition(start, end);
-    quickSort(start, pivotIndex - 1);
-    quickSort(pivotIndex + 1, end);
-  }
-
-  function partition(start, end) {
-    const pivotValue = arr[end];
-    let pivotIndex = start;
-
-    // Highlight pivot selection
-    frames.push({
-      array: [...arr],
-      highlight: [end],
-      swapped: false,
-      sortedIndices: [],
-      description: `Selecting pivot: ${pivotValue} at index ${end}`,
-      metadata: { pivot: pivotValue }
-    });
-
-    for (let i = start; i < end; i++) {
-      // Highlight comparison
-      frames.push({
-        array: [...arr],
-        highlight: [i, end],
-        swapped: false,
-        sortedIndices: [],
-        description: `Comparing ${arr[i]} with pivot ${pivotValue}`
-      });
-
-      if (arr[i] < pivotValue) {
-        // Swap elements
-        [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
-        
-        // Show swap
-        frames.push({
-          array: [...arr],
-          highlight: [i, pivotIndex],
-          swapped: true,
-          sortedIndices: [],
-          description: `Moving ${arr[pivotIndex]} to position ${pivotIndex}`
-        });
-
-        pivotIndex++;
-      }
-    }
-
-    // Final swap with pivot
-    [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]];
-    frames.push({
-      array: [...arr],
-      highlight: [pivotIndex, end],
-      swapped: true,
-      sortedIndices: [pivotIndex],
-      description: `Placing pivot ${pivotValue} in final position ${pivotIndex}`,
-      metadata: { pivot: pivotValue }
-    });
-
-    return pivotIndex;
-  }
-
-  quickSort(0, n - 1);
-
-  // Final sorted array
-  frames.push({
-    array: [...arr],
-    highlight: [],
-    swapped: false,
-    sortedIndices: Array.from({ length: n }, (_, idx) => idx),
-    description: "Array is completely sorted!"
-  });
-
-  return frames;
-}
+a) Rename your main file:
+```bash
+mv App.js App.jsx
 ```
 
-### `bfs.js`
-```javascript
-export function generateFrames(array) {
-  const frames = [];
-  const graph = buildGraphFromArray(array);
-  const visited = new Set();
-  const queue = [];
-  
-  // Initial state
-  frames.push({
-    array: [...array],
-    highlight: [],
-    visited: [],
-    description: "Starting Breadth-First Search"
-  });
-
-  // Start from first node (assuming it's index 0)
-  if (array.length > 0) {
-    queue.push(0);
-    visited.add(0);
-
-    frames.push({
-      array: [...array],
-      highlight: [0],
-      visited: [0],
-      description: `Visiting node 0 (value: ${array[0]})`
-    });
-
-    while (queue.length > 0) {
-      const current = queue.shift();
-      const neighbors = graph[current] || [];
-
-      for (const neighbor of neighbors) {
-        if (!visited.has(neighbor)) {
-          visited.add(neighbor);
-          queue.push(neighbor);
-
-          frames.push({
-            array: [...array],
-            highlight: [current, neighbor],
-            visited: [...visited],
-            description: `Visiting node ${neighbor} (value: ${array[neighbor]}) from node ${current}`
-          });
-        }
-      }
-    }
-  }
-
-  // Final state
-  frames.push({
-    array: [...array],
-    highlight: [],
-    visited: [...visited],
-    description: "BFS traversal complete"
-  });
-
-  return frames;
-}
-
-function buildGraphFromArray(array) {
-  // Simple binary tree structure for visualization
-  const graph = {};
-  for (let i = 0; i < array.length; i++) {
-    const left = 2 * i + 1;
-    const right = 2 * i + 2;
-    graph[i] = [];
-    if (left < array.length) graph[i].push(left);
-    if (right < array.length) graph[i].push(right);
-  }
-  return graph;
-}
+b) Make sure your project structure matches this:
+```
+src/
+  ├── App.jsx
+  ├── main.jsx
+  ├── components/
+  ├── algorithms/
+  ├── utils/
+  └── index.css
 ```
 
-### `dfs.js`
-```javascript
-export function generateFrames(array) {
-  const frames = [];
-  const graph = buildGraphFromArray(array);
-  const visited = new Set();
-  
-  // Initial state
-  frames.push({
-    array: [...array],
-    highlight: [],
-    visited: [],
-    description: "Starting Depth-First Search"
-  });
+c) Check your `main.jsx` (it should look something like this):
+```jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
 
-  // Start from first node (assuming it's index 0)
-  if (array.length > 0) {
-    dfsVisit(0, graph, visited, frames, array);
-  }
-
-  // Final state
-  frames.push({
-    array: [...array],
-    highlight: [],
-    visited: [...visited],
-    description: "DFS traversal complete"
-  });
-
-  return frames;
-}
-
-function dfsVisit(node, graph, visited, frames, array) {
-  visited.add(node);
-  
-  frames.push({
-    array: [...array],
-    highlight: [node],
-    visited: [...visited],
-    description: `Visiting node ${node} (value: ${array[node]})`
-  });
-
-  const neighbors = graph[node] || [];
-  for (const neighbor of neighbors) {
-    if (!visited.has(neighbor)) {
-      frames.push({
-        array: [...array],
-        highlight: [node, neighbor],
-        visited: [...visited],
-        description: `Exploring edge from ${node} to ${neighbor}`
-      });
-      
-      dfsVisit(neighbor, graph, visited, frames, array);
-    }
-  }
-}
-
-function buildGraphFromArray(array) {
-  // Same as BFS - simple binary tree structure
-  const graph = {};
-  for (let i = 0; i < array.length; i++) {
-    const left = 2 * i + 1;
-    const right = 2 * i + 2;
-    graph[i] = [];
-    if (left < array.length) graph[i].push(left);
-    if (right < array.length) graph[i].push(right);
-  }
-  return graph;
-}
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
 ```
 
-### `treeOps.js`
-```javascript
-export function generateFrames(array) {
-  const frames = [];
-  const tree = buildTreeFromArray(array);
-  
-  // Initial state
-  frames.push({
-    array: [...array],
-    highlight: [],
-    description: "Binary Tree constructed from array",
-    metadata: { tree: JSON.parse(JSON.stringify(tree)) }
-  });
+3. Additional Checks:
 
-  // In-order traversal
-  const inOrder = [];
-  inOrderTraversal(tree, inOrder, frames, array);
-  
-  // Pre-order traversal
-  const preOrder = [];
-  preOrderTraversal(tree, preOrder, frames, array);
-  
-  // Post-order traversal
-  const postOrder = [];
-  postOrderTraversal(tree, postOrder, frames, array);
+- Make sure all your component files have the correct extensions (`.jsx` for components)
+- Verify you have all required dependencies installed. Your `package.json` should include:
+  ```json
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+  ```
 
-  return frames;
-}
+4. If you're still having issues, try these commands:
 
-function buildTreeFromArray(array, index = 0) {
-  if (index >= array.length) return null;
-  
-  return {
-    value: array[index],
-    left: buildTreeFromArray(array, 2 * index + 1),
-    right: buildTreeFromArray(array, 2 * index + 2),
-    index
-  };
-}
-
-function inOrderTraversal(node, traversal, frames, array) {
-  if (!node) return;
-  
-  inOrderTraversal(node.left, traversal, frames, array);
-  
-  traversal.push(node.index);
-  frames.push({
-    array: [...array],
-    highlight: [node.index],
-    description: `In-order traversal: Visiting node ${node.index} (value: ${node.value})`,
-    metadata: { traversal: [...traversal], type: 'in-order' }
-  });
-  
-  inOrderTraversal(node.right, traversal, frames, array);
-}
-
-function preOrderTraversal(node, traversal, frames, array) {
-  if (!node) return;
-  
-  traversal.push(node.index);
-  frames.push({
-    array: [...array],
-    highlight: [node.index],
-    description: `Pre-order traversal: Visiting node ${node.index} (value: ${node.value})`,
-    metadata: { traversal: [...traversal], type: 'pre-order' }
-  });
-  
-  preOrderTraversal(node.left, traversal, frames, array);
-  preOrderTraversal(node.right, traversal, frames, array);
-}
-
-function postOrderTraversal(node, traversal, frames, array) {
-  if (!node) return;
-  
-  postOrderTraversal(node.left, traversal, frames, array);
-  postOrderTraversal(node.right, traversal, frames, array);
-  
-  traversal.push(node.index);
-  frames.push({
-    array: [...array],
-    highlight: [node.index],
-    description: `Post-order traversal: Visiting node ${node.index} (value: ${node.value})`,
-    metadata: { traversal: [...traversal], type: 'post-order' }
-  });
-}
+```bash
+npm install
+npm run dev
 ```
 
-## Steps to Run the Project
+The app should now show your algorithm visualizer interface with:
+- A left panel with algorithm selection and input controls
+- A main visualization area showing the array elements
+- Control buttons at the bottom
 
-1. **Install Node.js**: Make sure you have Node.js installed (version 14 or higher recommended)
-
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Run the Development Server**:
-   ```bash
-   npm run dev
-   ```
-
-   If you get errors with `npm run dev`, try:
-   ```bash
-   npm install vite --save-dev
-   npm run dev
-   ```
-
-   Alternatively, you can use:
-   ```bash
-   npm start
-   ```
-
-4. **Access the Application**:
-   Open your browser and go to `http://localhost:3000` (or the port shown in your terminal)
-
-## Troubleshooting Common Errors
-
-If you're getting errors when running `npm start` or `npm run dev`:
-
-1. **Missing Dependencies**:
-   ```bash
-   rm -rf node_modules package-lock.json
-   npm install
-   ```
-
-2. **Port Already in Use**:
-   Try running on a different port:
-   ```bash
-   PORT=3001 npm run dev
-   ```
-
-3. **React Scripts Not Found**:
-   If using Create React App:
-   ```bash
-   npm install react-scripts --save
-   ```
-
-4. **Vite Errors**:
-   If using Vite:
-   ```bash
-   npm install vite @vitejs/plugin-react --save-dev
-   ```
-
-5. **Check package.json scripts**:
-   Make sure your package.json has these scripts:
-   ```json
-   "scripts": {
-     "start": "react-scripts start",
-     "dev": "vite",
-     "build": "vite build",
-     "preview": "vite preview"
-   }
-   ```
-
-The application should now run and allow you to visualize all the implemented algorithms with their step-by-step execution.
+If you're still seeing issues, please:
+1. Share your project structure (`ls -R` output)
+2. Share your `main.jsx` and `index.html` files
+3. Let me know if you see any errors in the browser console or terminal
