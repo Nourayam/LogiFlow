@@ -1,102 +1,425 @@
-# Algorithm Visualizer: Overview and Setup Guide
+# Algorithm Visualizer Project Guide
 
-## What This Program Provides
+## What This Program Does
 
-This is an interactive algorithm visualization tool that helps you understand how different algorithms work by showing their step-by-step execution. It currently supports:
+This is an interactive algorithm visualization tool that helps you understand how different algorithms work by showing step-by-step execution. It currently includes:
 
 1. **Sorting Algorithms**:
    - Bubble Sort
    - Merge Sort
-   - Quick Sort
+   - Quick Sort (implementation missing)
 
 2. **Graph Algorithms**:
    - Breadth-First Search (BFS)
    - Depth-First Search (DFS)
+   - Binary Tree Operations
 
-3. **Tree Operations**:
-   - Binary Tree operations
+The visualizer shows:
+- The current state of the data structure
+- Highlighted elements being compared/processed
+- Step-by-step explanations
+- Algorithm complexity information
+- Animation controls (play/pause, step forward/backward)
 
-Key features:
-- Visual step-by-step execution with highlighted elements
-- Play/pause controls and adjustable speed
-- Detailed descriptions of each step
-- Algorithm information including time/space complexity
-- Random input generation
-- Export/import visualization state
+## Missing Algorithm Implementations
 
-## Steps to Run the Application
+I notice the following algorithms are imported but their implementation files are missing:
+- `quickSort.js`
+- `bfs.js`
+- `dfs.js`
+- `treeOps.js`
 
-### Prerequisites
-1. Node.js (v14 or higher) installed on your system
-2. npm (comes with Node.js) or yarn
+Here are the implementations for these missing files:
 
-### Installation Steps
+### `quickSort.js`
+```javascript
+export function generateFrames(array) {
+  const frames = [];
+  const arr = [...array];
+  const n = arr.length;
 
-1. **Clone the repository** (if you haven't already):
-   ```bash
-   git clone [repository-url]
-   cd AlgorVis
-   ```
+  // Initial state
+  frames.push({
+    array: [...arr],
+    highlight: [],
+    swapped: false,
+    sortedIndices: [],
+    description: "Starting Quick Sort (Divide and Conquer)"
+  });
 
-2. **Install dependencies**:
+  function quickSort(start, end) {
+    if (start >= end) return;
+
+    const pivotIndex = partition(start, end);
+    quickSort(start, pivotIndex - 1);
+    quickSort(pivotIndex + 1, end);
+  }
+
+  function partition(start, end) {
+    const pivotValue = arr[end];
+    let pivotIndex = start;
+
+    // Highlight pivot selection
+    frames.push({
+      array: [...arr],
+      highlight: [end],
+      swapped: false,
+      sortedIndices: [],
+      description: `Selecting pivot: ${pivotValue} at index ${end}`,
+      metadata: { pivot: pivotValue }
+    });
+
+    for (let i = start; i < end; i++) {
+      // Highlight comparison
+      frames.push({
+        array: [...arr],
+        highlight: [i, end],
+        swapped: false,
+        sortedIndices: [],
+        description: `Comparing ${arr[i]} with pivot ${pivotValue}`
+      });
+
+      if (arr[i] < pivotValue) {
+        // Swap elements
+        [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
+        
+        // Show swap
+        frames.push({
+          array: [...arr],
+          highlight: [i, pivotIndex],
+          swapped: true,
+          sortedIndices: [],
+          description: `Moving ${arr[pivotIndex]} to position ${pivotIndex}`
+        });
+
+        pivotIndex++;
+      }
+    }
+
+    // Final swap with pivot
+    [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]];
+    frames.push({
+      array: [...arr],
+      highlight: [pivotIndex, end],
+      swapped: true,
+      sortedIndices: [pivotIndex],
+      description: `Placing pivot ${pivotValue} in final position ${pivotIndex}`,
+      metadata: { pivot: pivotValue }
+    });
+
+    return pivotIndex;
+  }
+
+  quickSort(0, n - 1);
+
+  // Final sorted array
+  frames.push({
+    array: [...arr],
+    highlight: [],
+    swapped: false,
+    sortedIndices: Array.from({ length: n }, (_, idx) => idx),
+    description: "Array is completely sorted!"
+  });
+
+  return frames;
+}
+```
+
+### `bfs.js`
+```javascript
+export function generateFrames(array) {
+  const frames = [];
+  const graph = buildGraphFromArray(array);
+  const visited = new Set();
+  const queue = [];
+  
+  // Initial state
+  frames.push({
+    array: [...array],
+    highlight: [],
+    visited: [],
+    description: "Starting Breadth-First Search"
+  });
+
+  // Start from first node (assuming it's index 0)
+  if (array.length > 0) {
+    queue.push(0);
+    visited.add(0);
+
+    frames.push({
+      array: [...array],
+      highlight: [0],
+      visited: [0],
+      description: `Visiting node 0 (value: ${array[0]})`
+    });
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      const neighbors = graph[current] || [];
+
+      for (const neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push(neighbor);
+
+          frames.push({
+            array: [...array],
+            highlight: [current, neighbor],
+            visited: [...visited],
+            description: `Visiting node ${neighbor} (value: ${array[neighbor]}) from node ${current}`
+          });
+        }
+      }
+    }
+  }
+
+  // Final state
+  frames.push({
+    array: [...array],
+    highlight: [],
+    visited: [...visited],
+    description: "BFS traversal complete"
+  });
+
+  return frames;
+}
+
+function buildGraphFromArray(array) {
+  // Simple binary tree structure for visualization
+  const graph = {};
+  for (let i = 0; i < array.length; i++) {
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+    graph[i] = [];
+    if (left < array.length) graph[i].push(left);
+    if (right < array.length) graph[i].push(right);
+  }
+  return graph;
+}
+```
+
+### `dfs.js`
+```javascript
+export function generateFrames(array) {
+  const frames = [];
+  const graph = buildGraphFromArray(array);
+  const visited = new Set();
+  
+  // Initial state
+  frames.push({
+    array: [...array],
+    highlight: [],
+    visited: [],
+    description: "Starting Depth-First Search"
+  });
+
+  // Start from first node (assuming it's index 0)
+  if (array.length > 0) {
+    dfsVisit(0, graph, visited, frames, array);
+  }
+
+  // Final state
+  frames.push({
+    array: [...array],
+    highlight: [],
+    visited: [...visited],
+    description: "DFS traversal complete"
+  });
+
+  return frames;
+}
+
+function dfsVisit(node, graph, visited, frames, array) {
+  visited.add(node);
+  
+  frames.push({
+    array: [...array],
+    highlight: [node],
+    visited: [...visited],
+    description: `Visiting node ${node} (value: ${array[node]})`
+  });
+
+  const neighbors = graph[node] || [];
+  for (const neighbor of neighbors) {
+    if (!visited.has(neighbor)) {
+      frames.push({
+        array: [...array],
+        highlight: [node, neighbor],
+        visited: [...visited],
+        description: `Exploring edge from ${node} to ${neighbor}`
+      });
+      
+      dfsVisit(neighbor, graph, visited, frames, array);
+    }
+  }
+}
+
+function buildGraphFromArray(array) {
+  // Same as BFS - simple binary tree structure
+  const graph = {};
+  for (let i = 0; i < array.length; i++) {
+    const left = 2 * i + 1;
+    const right = 2 * i + 2;
+    graph[i] = [];
+    if (left < array.length) graph[i].push(left);
+    if (right < array.length) graph[i].push(right);
+  }
+  return graph;
+}
+```
+
+### `treeOps.js`
+```javascript
+export function generateFrames(array) {
+  const frames = [];
+  const tree = buildTreeFromArray(array);
+  
+  // Initial state
+  frames.push({
+    array: [...array],
+    highlight: [],
+    description: "Binary Tree constructed from array",
+    metadata: { tree: JSON.parse(JSON.stringify(tree)) }
+  });
+
+  // In-order traversal
+  const inOrder = [];
+  inOrderTraversal(tree, inOrder, frames, array);
+  
+  // Pre-order traversal
+  const preOrder = [];
+  preOrderTraversal(tree, preOrder, frames, array);
+  
+  // Post-order traversal
+  const postOrder = [];
+  postOrderTraversal(tree, postOrder, frames, array);
+
+  return frames;
+}
+
+function buildTreeFromArray(array, index = 0) {
+  if (index >= array.length) return null;
+  
+  return {
+    value: array[index],
+    left: buildTreeFromArray(array, 2 * index + 1),
+    right: buildTreeFromArray(array, 2 * index + 2),
+    index
+  };
+}
+
+function inOrderTraversal(node, traversal, frames, array) {
+  if (!node) return;
+  
+  inOrderTraversal(node.left, traversal, frames, array);
+  
+  traversal.push(node.index);
+  frames.push({
+    array: [...array],
+    highlight: [node.index],
+    description: `In-order traversal: Visiting node ${node.index} (value: ${node.value})`,
+    metadata: { traversal: [...traversal], type: 'in-order' }
+  });
+  
+  inOrderTraversal(node.right, traversal, frames, array);
+}
+
+function preOrderTraversal(node, traversal, frames, array) {
+  if (!node) return;
+  
+  traversal.push(node.index);
+  frames.push({
+    array: [...array],
+    highlight: [node.index],
+    description: `Pre-order traversal: Visiting node ${node.index} (value: ${node.value})`,
+    metadata: { traversal: [...traversal], type: 'pre-order' }
+  });
+  
+  preOrderTraversal(node.left, traversal, frames, array);
+  preOrderTraversal(node.right, traversal, frames, array);
+}
+
+function postOrderTraversal(node, traversal, frames, array) {
+  if (!node) return;
+  
+  postOrderTraversal(node.left, traversal, frames, array);
+  postOrderTraversal(node.right, traversal, frames, array);
+  
+  traversal.push(node.index);
+  frames.push({
+    array: [...array],
+    highlight: [node.index],
+    description: `Post-order traversal: Visiting node ${node.index} (value: ${node.value})`,
+    metadata: { traversal: [...traversal], type: 'post-order' }
+  });
+}
+```
+
+## Steps to Run the Project
+
+1. **Install Node.js**: Make sure you have Node.js installed (version 14 or higher recommended)
+
+2. **Install Dependencies**:
    ```bash
    npm install
-   # or if using yarn
-   yarn install
    ```
 
-3. **Run the development server**:
+3. **Run the Development Server**:
+   ```bash
+   npm run dev
+   ```
+
+   If you get errors with `npm run dev`, try:
+   ```bash
+   npm install vite --save-dev
+   npm run dev
+   ```
+
+   Alternatively, you can use:
    ```bash
    npm start
-   # or if using yarn
-   yarn start
    ```
 
-4. **Open the application**:
-   The application should automatically open in your default browser at `http://localhost:3000`. If it doesn't, you can manually navigate to this address.
+4. **Access the Application**:
+   Open your browser and go to `http://localhost:3000` (or the port shown in your terminal)
 
-### Using the Application
+## Troubleshooting Common Errors
 
-1. **Select an algorithm** from the dropdown menu
-2. **Enter input values** (comma-separated numbers) or click "Randomize"
-3. **Click "Visualize"** to start the visualization
-4. **Control the visualization**:
-   - Play/Pause: Spacebar or ⏵/⏸ button
-   - Step Forward/Backward: Arrow keys or buttons
-   - Adjust speed with the slider
-   - Reset to start over
+If you're getting errors when running `npm start` or `npm run dev`:
 
-### Additional Features
+1. **Missing Dependencies**:
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
 
-- **Export/Import**: Save your current visualization state or load a previous one
-- **Keyboard shortcuts**:
-  - Space: Play/Pause
-  - Right Arrow: Next step
-  - Left Arrow: Previous step
+2. **Port Already in Use**:
+   Try running on a different port:
+   ```bash
+   PORT=3001 npm run dev
+   ```
 
-### Building for Production
+3. **React Scripts Not Found**:
+   If using Create React App:
+   ```bash
+   npm install react-scripts --save
+   ```
 
-To create an optimized production build:
-```bash
-npm run build
-# or
-yarn build
-```
+4. **Vite Errors**:
+   If using Vite:
+   ```bash
+   npm install vite @vitejs/plugin-react --save-dev
+   ```
 
-This will create a `build` folder with all the static files you can deploy to any web server.
+5. **Check package.json scripts**:
+   Make sure your package.json has these scripts:
+   ```json
+   "scripts": {
+     "start": "react-scripts start",
+     "dev": "vite",
+     "build": "vite build",
+     "preview": "vite preview"
+   }
+   ```
 
-## Project Structure
-
-```
-AlgorVis/
-├── src/
-│   ├── algorithms/          # Algorithm implementations
-│   ├── components/          # React components
-│   ├── utils/               # Utility functions
-│   ├── App.js               # Main application component
-│   └── index.css            # Global styles
-├── public/                  # Static files
-└── package.json             # Project configuration
-```
-
-The application is built with React and uses functional components with hooks for state management. The visualization works by generating "frames" at each step of the algorithm execution, which are then rendered sequentially.
+The application should now run and allow you to visualize all the implemented algorithms with their step-by-step execution.
