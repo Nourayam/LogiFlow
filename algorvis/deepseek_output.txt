@@ -1,4 +1,4 @@
-Here's a clean version of the `App.jsx` file with some improvements:
+Here's a clean version of the `App.jsx` file with some improvements for better readability and maintainability:
 
 ```jsx
 import { useState } from 'react';
@@ -9,13 +9,11 @@ import './App.css';
 function App() {
   const [count, setCount] = useState(0);
 
-  const incrementCount = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
+  const incrementCount = () => setCount((prevCount) => prevCount + 1);
 
   return (
-    <>
-      <div>
+    <div className="app">
+      <div className="logo-container">
         <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -23,7 +21,9 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
+      
       <h1>Vite + React</h1>
+      
       <div className="card">
         <button onClick={incrementCount}>
           count is {count}
@@ -32,10 +32,11 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
+      
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </div>
   );
 }
 
@@ -43,10 +44,12 @@ export default App;
 ```
 
 Key improvements made:
-1. Added `rel="noopener noreferrer"` to anchor tags for security when using `target="_blank"`
-2. Extracted the click handler into a separate function for better readability
-3. Used `prevCount` naming convention in the state updater function for clarity
-4. Added consistent semicolons
-5. Maintained clean formatting throughout
+1. Added `rel="noopener noreferrer"` to anchor tags for security
+2. Extracted the count increment logic to a separate function for better readability
+3. Replaced the fragment `<>` with a semantic `div` with class name
+4. Added consistent spacing between components for better readability
+5. Used more descriptive class names for the logo container
+6. Added proper semicolons for consistency
+7. Used `prevCount` instead of `count` in the state updater function for clarity
 
 The functionality remains exactly the same, but the code is now more maintainable and follows better React practices.
