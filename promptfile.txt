@@ -1,4 +1,1 @@
-i ran it but it just takes me to a vite + react page. can't see anything and there's also nothing in terminal, 
-this is all it says
-Edit src/App.jsx and save to test HMR
-and there's a small clickable box that goes up when i click on it and it says count is 0 on it
+how do i run this program, a to z, any if nothing shows up, why

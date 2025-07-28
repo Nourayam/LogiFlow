@@ -8,21 +8,21 @@ ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 
 # === 🗂️ File Paths ===
 INPUT_FILES = [
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/promptfile.txt",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/App.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/index.css",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Canvas.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Node.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/Controls.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/components/InputPanel.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/bubbleSort.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/algorithms/mergeSort.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/utils/validateFrames.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/src/utils/algorithmInfo.js"
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/promptfile.txt",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/App.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/index.css",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/Canvas.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/Node.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/Controls.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/InputPanel.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/algorithms/bubbleSort.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/algorithms/mergeSort.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/utils/validateFrames.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/utils/algorithmInfo.js"
 
 ]
 
-OUTPUT_FILE = "C:/Users/noura/OneDrive/Desktop/Projects/AlgorVis/deepseek_output.txt"
+OUTPUT_FILE = "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/deepseek_output.txt"
 
 # === 📦 Load Prompt ===
 # === 📦 Load Multiple Files ===

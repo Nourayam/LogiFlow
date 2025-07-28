@@ -1,2 +1,2 @@
-# AlgorVis
+# algorvis
 Pending..
