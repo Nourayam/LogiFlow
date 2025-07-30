@@ -52,5 +52,33 @@ export const ALGORITHM_INFO = {
       best: 'O(1)'
     },
     spaceComplexity: 'O(n)'
-  }
+  },
+
+  'Selection Sort': {
+  description: 'Finds the minimum element from the unsorted portion and places it at the beginning. Builds the sorted array one element at a time.',
+  timeComplexity: {
+    worst: 'O(n²)',
+    average: 'O(n²)',
+    best: 'O(n²)'
+  },
+  spaceComplexity: 'O(1)'
+},
+'Insertion Sort': {
+  description: 'Builds the sorted array one element at a time by repeatedly taking an element and inserting it into its correct position.',
+  timeComplexity: {
+    worst: 'O(n²)',
+    average: 'O(n²)',
+    best: 'O(n)'
+  },
+  spaceComplexity: 'O(1)'
+},
+'Heap Sort': {
+  description: 'Uses a binary heap data structure to sort elements. First builds a max heap, then repeatedly extracts the maximum element.',
+  timeComplexity: {
+    worst: 'O(n log n)',
+    average: 'O(n log n)',
+    best: 'O(n log n)'
+  },
+  spaceComplexity: 'O(1)'
+}
 };

@@ -13,7 +13,7 @@
 .form-group label {
   color: var(--text-primary);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .form-group select,
@@ -23,13 +23,13 @@
   border-radius: 8px;
   padding: 0.75rem;
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 1.1rem;
 }
 
 /* Fix dropdown options styling */
 .form-group select option {
   background: var(--background-dark);
-  color: var(--text-primary);
+  color: black;
   padding: 0.5rem;
   border: none;
 }
