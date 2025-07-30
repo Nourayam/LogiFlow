@@ -63,7 +63,7 @@ export const ALGORITHM_INFO = {
   },
   spaceComplexity: 'O(1)'
 },
-'Insertion Sort': {
+  'Insertion Sort': {
   description: 'Builds the sorted array one element at a time by repeatedly taking an element and inserting it into its correct position.',
   timeComplexity: {
     worst: 'O(n²)',
@@ -72,7 +72,7 @@ export const ALGORITHM_INFO = {
   },
   spaceComplexity: 'O(1)'
 },
-'Heap Sort': {
+  'Heap Sort': {
   description: 'Uses a binary heap data structure to sort elements. First builds a max heap, then repeatedly extracts the maximum element.',
   timeComplexity: {
     worst: 'O(n log n)',

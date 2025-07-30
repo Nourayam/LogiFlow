@@ -62,13 +62,16 @@ export default function InputPanel({
             onChange={handleAlgorithmChange}
             disabled={isGeneratingFrames}
           >
+            <option value="Breadth-First Search">Breadth First Search</option>
             <option value="Bubble Sort">Bubble Sort</option>
+            <option value="Depth-First Search">Depth First Search</option>
+            <option value="Heap Sort">Heap Sort</option>
+            <option value="Insertion Sort">Insertion Sort</option>
             <option value="Merge Sort">Merge Sort</option>
             <option value="Quick Sort">Quick Sort</option>
-            <option value="Breadth-First Search">BFS</option>
-            <option value="Depth-First Search">DFS</option>
+            <option value="Selection Sort">Selection Sort</option>
             <option value="Binary Tree Operations">Tree Operations</option>
-          </select>
+</select>
         </div>
         
         {algorithmInfo && (
