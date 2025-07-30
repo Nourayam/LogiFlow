@@ -1,196 +1,224 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import * as bubbleSort from './algorithms/bubbleSort';
+import * as mergeSort from './algorithms/mergeSort';
+import * as quickSort from './algorithms/quickSort';
+import * as bfs from './algorithms/bfs';
+import * as dfs from './algorithms/dfs';
+import * as treeOps from './algorithms/treeOps';
 import Canvas from './components/Canvas';
 import Controls from './components/Controls';
 import InputPanel from './components/InputPanel';
-import Loader from './components/Loader';
 import { ALGORITHM_INFO } from './utils/algorithmInfo';
 import { validateFrames } from './utils/validateFrames';
-import './App.css';
+import Loader from './components/Loader';
+import './index.css';
+
+const ALGORITHMS = {
+  'Bubble Sort': bubbleSort,
+  'Merge Sort': mergeSort,
+  'Quick Sort': quickSort,
+  'Breadth-First Search': bfs,
+  'Depth-First Search': dfs,
+  'Binary Tree Operations': treeOps,
+};
 
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('Bubble Sort');
   const [inputArray, setInputArray] = useState([5, 3, 8, 4, 2]);
   const [frames, setFrames] = useState([]);
-  const [currentFrameIndex, setCurrentFrameIndex] = useState(0);
+  const [frameIndex, setFrameIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [speed, setSpeed] = useState(500);
+  const [speedMs, setSpeedMs] = useState(500);
   const [isGeneratingFrames, setIsGeneratingFrames] = useState(false);
+  const [exportData, setExportData] = useState(null);
   const [error, setError] = useState(null);
 
-  const algorithmInfo = ALGORITHM_INFO[selectedAlgorithm];
-
-  // Load algorithm dynamically
-  const loadAlgorithm = async (algorithm) => {
-    const algorithmMap = {
-      'Bubble Sort': () => import('./algorithms/bubbleSort'),
-      'Merge Sort': () => import('./algorithms/mergeSort'),
-      'Quick Sort': () => import('./algorithms/quickSort'),
-      'Breadth-First Search': () => import('./algorithms/bfs'),
-      'Depth-First Search': () => import('./algorithms/dfs'),
-      'Binary Tree Operations': () => import('./algorithms/treeOps')
-    };
-
-    try {
-      const module = await algorithmMap[algorithm]();
-      return module.generateFrames;
-    } catch (err) {
-      throw new Error(`Failed to load algorithm: ${algorithm}`);
-    }
-  };
-
-  // Generate visualisation frames
-  const generateVisualisationFrames = async () => {
-    if (inputArray.length === 0) {
-      setError('Please provide input data');
-      return;
-    }
-
-    setIsGeneratingFrames(true);
-    setError(null);
-    
-    try {
-      const generateFrames = await loadAlgorithm(selectedAlgorithm);
-      const newFrames = generateFrames([...inputArray]);
-      const validatedFrames = validateFrames(newFrames, selectedAlgorithm);
-      
-      setFrames(validatedFrames);
-      setCurrentFrameIndex(0);
-      setIsPlaying(false);
-    } catch (err) {
-      setError(`Visualisation error: ${err.message}`);
-      console.error('Algorithm generation failed:', err);
-    } finally {
-      setIsGeneratingFrames(false);
-    }
-  };
-
-  // Auto-play animation
+  // Generate frames with enhanced error handling
   useEffect(() => {
-    let interval;
-    if (isPlaying && frames.length > 0) {
-      interval = setInterval(() => {
-        setCurrentFrameIndex(prev => {
-          if (prev >= frames.length - 1) {
-            setIsPlaying(false);
-            return prev;
-          }
-          return prev + 1;
-        });
-      }, 1000 - speed);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, frames.length, speed]);
+    const generateFrames = async () => {
+      try {
+        setIsGeneratingFrames(true);
+        setError(null);
+        const algorithm = ALGORITHMS[selectedAlgorithm];
+        
+        if (!algorithm?.generateFrames) {
+          throw new Error('Selected algorithm not implemented');
+        }
 
-  // Generate initial frames
-  useEffect(() => {
-    generateVisualisationFrames();
-  }, [selectedAlgorithm, inputArray]);
+        const newFrames = algorithm.generateFrames(inputArray);
+        if (!newFrames || newFrames.length === 0) {
+          throw new Error('Algorithm returned no frames');
+        }
 
-  const handlePlayPause = () => setIsPlaying(!isPlaying);
-  const handleStepForward = () => {
-    if (currentFrameIndex < frames.length - 1) {
-      setCurrentFrameIndex(currentFrameIndex + 1);
-    }
-  };
-  const handleStepBackward = () => {
-    if (currentFrameIndex > 0) {
-      setCurrentFrameIndex(currentFrameIndex - 1);
-    }
-  };
-  const handleReset = () => {
-    setCurrentFrameIndex(0);
-    setIsPlaying(false);
-  };
-  const handleSpeedChange = (e) => setSpeed(parseInt(e.target.value));
-
-  const handleExport = () => {
-    const data = { algorithm: selectedAlgorithm, input: inputArray, frames };
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `algorvis-${selectedAlgorithm.toLowerCase().replace(/\s+/g, '-')}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImport = () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          try {
-            const data = JSON.parse(e.target.result);
-            setSelectedAlgorithm(data.algorithm);
-            setInputArray(data.input);
-            setFrames(data.frames);
-            setCurrentFrameIndex(0);
-          } catch (err) {
-            setError('Invalid import file format');
-          }
-        };
-        reader.readAsText(file);
+        // Validate frames before setting them
+        const validatedFrames = validateFrames(newFrames, selectedAlgorithm);
+        setFrames(validatedFrames);
+        setFrameIndex(0);
+        setIsPlaying(false);
+      } catch (error) {
+        console.error('Frame generation error:', error);
+        setError(error.message);
+        setFrames([{
+          array: inputArray,
+          highlight: [],
+          swapped: false,
+          sortedIndices: [],
+          description: `Error: ${error.message}`
+        }]);
+      } finally {
+        setIsGeneratingFrames(false);
       }
     };
-    input.click();
-  };
 
-  const currentFrame = frames[currentFrameIndex] || { array: inputArray, highlight: [], description: 'Ready to visualise' };
+    generateFrames();
+  }, [selectedAlgorithm, inputArray]);
+
+  // Animation handling
+  useEffect(() => {
+    if (!isPlaying || frames.length === 0) return;
+
+    const timer = setTimeout(() => {
+      setFrameIndex(prev => {
+        if (prev < frames.length - 1) return prev + 1;
+        setIsPlaying(false);
+        return prev;
+      });
+    }, speedMs);
+
+    return () => clearTimeout(timer);
+  }, [isPlaying, frameIndex, frames, speedMs]);
+
+  // Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.code === 'Space') {
+        e.preventDefault();
+        handlePlayPause();
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        handleStepForward();
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        handleStepBackward();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isPlaying, frameIndex, frames]);
+
+  const handlePlayPause = useCallback(() => {
+    setIsPlaying(!isPlaying);
+  }, [isPlaying]);
+
+  const handleStepForward = useCallback(() => {
+    if (frameIndex < frames.length - 1) {
+      setFrameIndex(frameIndex + 1);
+    }
+  }, [frameIndex, frames]);
+
+  const handleStepBackward = useCallback(() => {
+    if (frameIndex > 0) {
+      setFrameIndex(frameIndex - 1);
+    }
+  }, [frameIndex]);
+
+  const handleReset = useCallback(() => {
+    setFrameIndex(0);
+    setIsPlaying(false);
+  }, []);
+
+  const handleSpeedChange = useCallback((e) => {
+    setSpeedMs(1000 - e.target.value);
+  }, []);
+
+  const handleExport = useCallback(() => {
+    try {
+      const data = {
+        algorithm: selectedAlgorithm,
+        inputArray,
+        frames,
+        currentFrame: frameIndex,
+        speed: speedMs,
+        timestamp: new Date().toISOString(),
+        version: '1.0'
+      };
+      const json = JSON.stringify(data);
+      setExportData(json);
+      navigator.clipboard.writeText(json).then(() => {
+        alert('Visualisation state copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy to clipboard. Please try again.');
+      });
+    } catch (error) {
+      alert('Export failed: ' + error.message);
+    }
+  }, [selectedAlgorithm, inputArray, frames, frameIndex, speedMs]);
+
+  const handleImport = useCallback(() => {
+    try {
+      const json = prompt('Paste the exported visualisation state:');
+      if (!json) return;
+      
+      const data = JSON.parse(json);
+      if (!data.algorithm || !data.inputArray || !data.frames) {
+        throw new Error('Invalid visualisation state format');
+      }
+
+      setSelectedAlgorithm(data.algorithm);
+      setInputArray(data.inputArray);
+      setFrames(data.frames);
+      setFrameIndex(data.currentFrame || 0);
+      setSpeedMs(data.speed || 500);
+    } catch (error) {
+      alert('Failed to import visualisation state: ' + error.message);
+    }
+  }, []);
 
   return (
     <div className="app">
-      <header className="app-header">
-        <h1>🎯 AlgorVis</h1>
-        <p>Interactive Algorithm Visualisation Platform</p>
-      </header>
-
-      <main className="app-main">
-        <div className="sidebar">
-          <InputPanel
-            selectedAlgorithm={selectedAlgorithm}
-            setSelectedAlgorithm={setSelectedAlgorithm}
-            inputArray={inputArray}
-            setInputArray={setInputArray}
-            algorithmInfo={algorithmInfo}
-            isGeneratingFrames={isGeneratingFrames}
-          />
-        </div>
-
-        <div className="visualisation-area">
-          {isGeneratingFrames ? (
+      <h1>Algorithm Visualiser</h1>
+      <div className="main-container">
+        <InputPanel
+          selectedAlgorithm={selectedAlgorithm}
+          setSelectedAlgorithm={setSelectedAlgorithm}
+          inputArray={inputArray}
+          setInputArray={setInputArray}
+          algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
+          isGeneratingFrames={isGeneratingFrames}
+        />
+        
+        {isGeneratingFrames ? (
+          <div className="loading-overlay">
             <Loader />
-          ) : (
-            <>
-              <Canvas
-                frame={currentFrame}
-                algorithm={selectedAlgorithm}
-                frameIndex={currentFrameIndex}
-                totalFrames={frames.length}
-                algorithmInfo={algorithmInfo}
-                error={error}
-              />
-              <Controls
-                isPlaying={isPlaying}
-                onPlayPause={handlePlayPause}
-                onStepForward={handleStepForward}
-                onStepBackward={handleStepBackward}
-                onReset={handleReset}
-                speed={speed}
-                onSpeedChange={handleSpeedChange}
-                frameIndex={currentFrameIndex}
-                totalFrames={frames.length}
-                onExport={handleExport}
-                onImport={handleImport}
-                isGeneratingFrames={isGeneratingFrames}
-              />
-            </>
-          )}
-        </div>
-      </main>
+            <p>Generating visualisation frames...</p>
+          </div>
+        ) : (
+          <Canvas
+            frame={frames[frameIndex] || {}}
+            algorithm={selectedAlgorithm}
+            frameIndex={frameIndex}
+            totalFrames={frames.length}
+            algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
+            error={error}
+          />
+        )}
+        
+        <Controls
+          isPlaying={isPlaying}
+          onPlayPause={handlePlayPause}
+          onStepForward={handleStepForward}
+          onStepBackward={handleStepBackward}
+          onReset={handleReset}
+          speed={1000 - speedMs}
+          onSpeedChange={handleSpeedChange}
+          frameIndex={frameIndex}
+          totalFrames={frames.length}
+          onExport={handleExport}
+          onImport={handleImport}
+          isGeneratingFrames={isGeneratingFrames}
+        />
+      </div>
     </div>
   );
 }

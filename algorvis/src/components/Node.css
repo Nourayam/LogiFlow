@@ -1,0 +1,62 @@
+/* C:\Users\noura\OneDrive\Desktop\Projects\algorvis\algorvis\src\components\Node.css */
+.node {
+  position: relative;
+  background: linear-gradient(135deg, var(--background-light), var(--background-dark));
+  border: 2px solid var(--border-colour);
+  border-radius: 12px;
+  padding: 1rem;
+  min-width: 60px;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: centre;
+  justify-content: centre;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.node-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.node-index {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+.node.highlighted {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 20px rgba(76, 201, 240, 0.4);
+  transform: scale(1.1);
+}
+
+.node.swapped {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px rgba(247, 37, 133, 0.4);
+  background: linear-gradient(135deg, rgba(247, 37, 133, 0.2), rgba(247, 37, 133, 0.1));
+}
+
+.node.sorted {
+  border-color: var(--success-color);
+  box-shadow: 0 0 15px rgba(6, 255, 165, 0.3);
+  background: linear-gradient(135deg, rgba(6, 255, 165, 0.2), rgba(6, 255, 165, 0.1));
+}
+
+.node.visited {
+  border-color: var(--warning-color);
+  box-shadow: 0 0 15px rgba(255, 190, 11, 0.3);
+  background: linear-gradient(135deg, rgba(255, 190, 11, 0.2), rgba(255, 190, 11, 0.1));
+}
+
+.node.pulse {
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1.1); }
+}
