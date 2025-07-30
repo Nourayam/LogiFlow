@@ -8,17 +8,17 @@ ENDPOINT = "https://api.deepseek.com/v1/chat/completions"
 
 # === 🗂️ File Paths ===
 INPUT_FILES = [
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/promptfile.txt",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/promptfile.txt",
     "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/App.jsx",
     "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/index.css",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/Canvas.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/Node.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/Controls.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/components/InputPanel.jsx",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/algorithms/bubbleSort.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/algorithms/mergeSort.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/utils/validateFrames.js",
-    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/algorvis/src/utils/algorithmInfo.js"
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/components/Canvas.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/components/Node.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/components/Controls.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/components/InputPanel.jsx",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/algorithms/bubbleSort.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/algorithms/mergeSort.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/utils/validateFrames.js",
+    "C:/Users/noura/OneDrive/Desktop/Projects/algorvis/src/utils/algorithmInfo.js"
 
 ]
 

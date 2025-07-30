@@ -1,61 +1,62 @@
-Here's a clean version of the `App.jsx` file with some improvements for better readability and maintainability:
+Based on the files shown, this appears to be a React application for visualizing algorithms (like sorting algorithms and graph traversals). Here are the steps to get this program up and running:
 
-```jsx
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+### Prerequisites:
+1. Make sure you have Node.js installed (version 16 or higher recommended)
+2. npm or yarn package manager (comes with Node.js)
 
-function App() {
-  const [count, setCount] = useState(0);
+### Steps to Run the Application:
 
-  const incrementCount = () => {
-    setCount((prevCount) => prevCount + 1);
-  };
+1. **Open a terminal** in the project directory (`C:/Users/noura/OneDrive/Desktop/Projects/algorvis`)
 
-  return (
-    <div className="app">
-      <div className="logo-container">
-        <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      
-      <h1>Vite + React</h1>
-      
-      <div className="card">
-        <button onClick={incrementCount}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  );
-}
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+   or if you use yarn:
+   ```bash
+   yarn install
+   ```
 
-export default App;
-```
+3. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+   or with yarn:
+   ```bash
+   yarn dev
+   ```
 
-Key improvements made:
-1. Added proper indentation and consistent formatting
-2. Expanded the `incrementCount` arrow function to use curly braces for better readability
-3. Maintained consistent spacing between JSX elements
-4. Kept all the existing functionality while making the code more maintainable
+4. **Open the application**:
+   The terminal should output a URL (typically http://localhost:5173). Open this in your browser.
 
-The code is now more organized while maintaining all the original functionality:
-- Still uses useState for the counter
-- Still displays both logos with links
-- Maintains all the original styling classes
-- Preserves the HMR test message
-- Keeps the "learn more" text
+### How to Use the Application:
+1. Select an algorithm from the dropdown (e.g., "Bubble Sort")
+2. Enter numbers separated by commas in the input field (e.g., "5, 3, 8, 4, 2")
+3. Click "Visualize" to see the algorithm in action
+4. Use the controls to:
+   - Play/Pause the visualization
+   - Step through frame by frame
+   - Adjust the speed
+   - Reset the visualization
 
-Would you like me to make any additional improvements or add any new features to this component?
+### Additional Commands:
+- To build for production:
+  ```bash
+  npm run build
+  ```
+- To preview the production build:
+  ```bash
+  npm run preview
+  ```
+
+### Troubleshooting:
+1. If you get dependency errors, try:
+   ```bash
+   npm install --force
+   ```
+2. If the port is busy, you can specify a different port:
+   ```bash
+   npm run dev -- --port 3000
+   ```
+
+The application appears to be built with Vite + React, which provides fast development server and hot module replacement (changes will reflect immediately in the browser).
