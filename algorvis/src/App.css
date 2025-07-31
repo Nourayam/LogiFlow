@@ -43,6 +43,7 @@ body {
 
 .app-header h1 {
   font-size: 3rem;
+  text-shadow: 0 0 40px rgba(135, 140, 228, 0.549);
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -95,6 +96,7 @@ body {
   
   .app-header h1 {
     font-size: 2rem;
+    text-shadow: 0 0 40px rgba(134, 131, 199, 0.549);
   }
   
   .app-header p {

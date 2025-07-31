@@ -26,7 +26,7 @@ const ALGORITHMS = {
   'Insertion Sort': insertionSort,
   'Heap Sort': heapSort,
   'Selection Sort': selectionSort
-  
+
 };
 
 function App() {
@@ -184,7 +184,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Algorithm Visualiser</h1>
+      <h1>AlgorVis - Your Algorithm Visualiser</h1>
       <div className="main-container">
         <InputPanel
           selectedAlgorithm={selectedAlgorithm}
