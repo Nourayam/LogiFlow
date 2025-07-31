@@ -1,165 +1,164 @@
+# 🧮 AlgorVis
+
 AlgorVis is an interactive, educational platform that brings algorithms to life through stunning visual animations. Whether you're a student learning computer science fundamentals or an educator teaching complex algorithmic concepts, AlgorVis transforms abstract computational processes into engaging, step-by-step visual experiences.
-🌟 Features
-🔄 Comprehensive Algorithm Coverage
 
-Sorting Algorithms: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort
-Graph Traversal: Breadth-First Search (BFS), Depth-First Search (DFS)
-Tree Operations: Binary tree traversals, insertions, and manipulations
-More algorithms coming soon: Dijkstra's Algorithm, A* Pathfinding, AVL Trees
+---
 
-🎮 Interactive Visualisation Controls
+## 🌟 Features
 
-Play/Pause: Control animation timing at your own pace
-Step-by-Step Navigation: Move forward and backward through each algorithmic step
-Speed Control: Adjust animation speed from 100ms to 1000ms intervals
-Reset Functionality: Return to initial state instantly
-Progress Tracking: Visual progress bar showing current execution step
+### 🔄 Comprehensive Algorithm Coverage
+- **Sorting Algorithms**: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort  
+- **Graph Traversal**: Breadth-First Search (BFS), Depth-First Search (DFS)  
+- **Tree Operations**: Binary tree traversals, insertions, and manipulations  
+- _More algorithms coming soon_: Dijkstra's Algorithm, A* Pathfinding, AVL Trees
 
-🛠️ Custom Input & Flexibility
+### 🎮 Interactive Visualisation Controls
+- Play/Pause: Control animation timing at your own pace  
+- Step-by-Step Navigation: Move through each algorithmic step  
+- Speed Control: Adjust speed from 100ms to 1000ms  
+- Reset Functionality: Return to initial state  
+- Progress Tracking: Visual bar shows current execution step
 
-Dynamic Array Input: Enter your own numbers (e.g., 5, 3, 8, 4, 2)
-Random Generation: Generate random test arrays with a single click
-Input Validation: Intelligent error handling with helpful feedback messages
-Algorithm-Specific Constraints: Automatic suggestions for optimal input sizes
+### 🛠️ Custom Input & Flexibility
+- Dynamic Array Input: e.g. `5, 3, 8, 4, 2`  
+- Random Generation: Single-click test arrays  
+- Input Validation: Intelligent feedback on errors  
+- Algorithm-Specific Constraints: Optimal input suggestions
 
-📊 Educational Tools
+### 📊 Educational Tools
+- Algorithm Information: Detailed breakdowns  
+- Complexity Analysis: Best, average, and worst cases  
+- Real-Time Descriptions: Step-by-step execution insights  
+- Visual Highlighting: Colour-coded comparisons and swaps
 
-Algorithm Information: Detailed descriptions of how each algorithm works
-Complexity Analysis: Time and space complexity for worst, average, and best cases
-Real-Time Descriptions: Step-by-step explanations during execution
-Visual Highlighting: Colour-coded elements show comparisons, swaps, and sorted portions
+### 💾 State Management
+- Export Visualisations: Save states as JSON  
+- Import Sessions: Replay previous runs  
+- Frame History: Track every step  
+- Session Persistence: Continue where you left off
 
-💾 State Management
+### 🎨 Modern UI/UX
+- Dark Theme: Eye comfort for extended use  
+- Responsive Design: Desktop, tablet, and mobile  
+- Smooth Animations: CSS transitions  
+- Accessibility: Keyboard and screen reader support
 
-Export Visualisations: Save algorithm states as JSON files
-Import Sessions: Load and replay previous visualisation sessions
-Frame History: Complete state tracking for every algorithmic step
-Session Persistence: Continue where you left off
+---
 
-🎨 Modern UI/UX
+## 🚀 Getting Started
 
-Dark Theme: Easy on the eyes for extended learning sessions
-Responsive Design: Works seamlessly on desktop, tablet, and mobile devices
-Smooth Animations: CSS transitions and transforms for polished visual effects
-Accessibility: Keyboard navigation and screen reader support
+### Prerequisites
+- Node.js (16.0 or higher)  
+- npm or yarn  
+- Modern browser (Chrome, Firefox, Safari, Edge)
 
-🚀 Getting Started
-Prerequisites
+### Installation
 
-Node.js (version 16.0 or higher)
-npm or yarn package manager
-Modern web browser (Chrome, Firefox, Safari, Edge)
-
-Installation
-
-Clone the repository
-bashCopygit clone https://github.com/yourusername/algorvis.git
+```bash
+git clone https://github.com/yourusername/algorvis.git
 cd algorvis/algorvis
+npm install # or yarn install
+npm run dev # or yarn dev
+```
+Then open http://localhost:5173 to see AlgorVis in action!
 
-Install dependencies
-bashCopynpm install
-# or
-yarn install
-
-Start development server
-bashCopynpm run dev
-# or
-yarn dev
-
-Open your browser
-Navigate to http://localhost:5173 to see AlgorVis in action!
-
-Building for Production
-bashCopynpm run build
+### Building for Production
+```bash
+npm run build
 npm run preview
-📖 How to Use AlgorVis
-1. Select an Algorithm
-Choose from our comprehensive list of sorting, searching, and tree algorithms using the dropdown menu.
-2. Input Your Data
+```
+### 📖 How to Use AlgorVis
+***Select an Algorithm From the dropdown: sorting, searching, or tree algorithms.***
 
-Enter numbers separated by commas: 64, 34, 25, 12, 22, 11, 90
-Or click "Randomise" for a quick test array
-Algorithm-specific tips appear to guide optimal input sizes
+- Input Your Data
+    Example: 64, 34, 25, 12, 22, 11, 90
+- Or use "Randomise"
+- Tips appear based on selected algorithm
 
-3. Start Visualisation
+### Start Visualisation
 
-Click "Visualise" to generate the step-by-step animation
-Use playback controls to navigate through each step
-Read the real-time descriptions to understand what's happening
+- Click "Visualise" to begin animation
+- Use playback controls to explore
+- Watch real-time descriptions update
 
-4. Learn and Explore
+***Learn and Explore***
+- Review time/space complexity
+- Export key visualisations
+- Try varied input sizes
 
-Review time/space complexity information
-Export interesting visualisations to share or study later
-Try different input sizes to see how algorithms scale
+### 🧠 Educational Value
 
-🧠 Educational Value
-For Students
+***For Students***
+- Visual Learning
+- Step-by-Step Understanding
+- Comparative Efficiency
+- Interactive Exploration
 
-Visual Learning: See exactly how algorithms manipulate data structures
-Step-by-Step Understanding: Break down complex processes into digestible steps
-Comparative Analysis: Run different algorithms on the same data to compare efficiency
-Interactive Exploration: Learn by doing, not just reading
+***For Educators***
+- Classroom Ready
+- Export Capabilities
+- Engagement Tool
+- Self-Paced Discovery
 
-For Educators
+***For Professionals***
+- Interview Preparation
+- Concept Refresher
+- Teaching Tool
 
-Classroom Ready: Perfect for lectures, tutorials, and demonstrations
-Export Capabilities: Save specific examples for coursework
-Engagement Tool: Transform abstract concepts into concrete visuals
-Self-Paced Learning: Students can explore at their own speed
+### 🏗️ Architecture & Technology
 
-For Professionals
+- Frontend Stack
+- React 19.1.0
+- Vite
+- CSS3
+- ES6+ Modules
 
-Interview Preparation: Visualise common algorithmic interview questions
-Concept Refresher: Quick visual reminders of algorithm mechanics
-Teaching Tool: Explain algorithms to team members or mentees
+***Key Design Patterns***
+- Component Composition
+- State Management via Hooks
+- Dynamic Imports & Code Splitting
+- Error Boundaries
 
-🏗️ Architecture & Technology
-Frontend Stack
+### File Structure
+src/
+├── components/          # UI modules
+│   ├── Canvas.jsx       # Visualisation canvas
+│   ├── Controls.jsx     # Playback controls
+│   ├── InputPanel.jsx   # Input + algorithm selector
+│   └── Node.jsx         # Data nodes
+├── algorithms/          # Algorithm logic
+│   ├── bubbleSort.js
+│   ├── bfs.js
+│   └── treeOps.js
+└── utils/
+    ├── algorithmInfo.js
+    └── validateFrames.js
 
-React 19.1.0: Modern component-based architecture
-Vite: Lightning-fast development and build tool
-CSS3: Custom animations and responsive design
-ES6+ Modules: Clean, maintainable code structure
+### 🛣️ Roadmap
+***Immediate Additions***
+- Dijkstra’s, A*, Bellman-Ford
+- AVL Trees, Red-Black Trees, B-Trees
+- Dynamic Programming (Fibonacci, Knapsack, LCS)
 
-Key Design Patterns
+***Enhanced Features***
+- Custom Algorithm Upload
+- Performance Benchmarking
+- 3D Visualisations
 
-Component Composition: Modular, reusable UI components
-State Management: Efficient React hooks for complex state
-Dynamic Imports: Code splitting for optimal performance
-Error Boundaries: Graceful error handling and recovery
+***Collaborative Sessions***
+- Platform Improvements
+- Native Mobile Apps
+- Offline Mode
+- Multi-language Support
 
-File Structure
-Copysrc/
-├── components/          # Reusable UI components
-│   ├── Canvas.jsx      # Main visualisation area
-│   ├── Controls.jsx    # Playback controls
-│   ├── InputPanel.jsx  # Algorithm selection & input
-│   └── Node.jsx        # Individual data elements
-├── algorithms/         # Algorithm implementations
-│   ├── bubbleSort.js   # Sorting algorithms
-│   ├── bfs.js         # Graph algorithms
-│   └── treeOps.js     # Tree algorithms
-└── utils/             # Helper functions
-    ├── algorithmInfo.js # Algorithm metadata
-    └── validateFrames.js # Data validation
-🛣️ Roadmap
-Immediate Additions
+***Full Accessibility Enhancements***
 
- Pathfinding Algorithms: Dijkstra's, A*, Bellman-Ford
- Advanced Trees: AVL Trees, Red-Black Trees, B-Trees
- Dynamic Programming: Fibonacci, Knapsack, Longest Common Subsequence
+- 🐛 Bug Reports
 
-Enhanced Features
+- 💡 Feature Requests
 
- Custom Algorithm Upload: Let users write and visualise their own algorithms
- Performance Benchmarking: Real execution time measurements
- 3D Visualisations: Advanced data structures in three dimensions
- Collaborative Sessions: Share visualisations in real-time
+- 🔧 Code Submissions
 
-Platform Improvements
+- 📚 Documentation
 
- Mobile App: Native iOS and Android applications
- Offline Mode: Download algorithms for offline learning
- Multi-language Support: Internationalisation for global accessibility
- Accessibility Enhancements: Full screen reader and keyboard support
+- 🎨 UX Enhancements
