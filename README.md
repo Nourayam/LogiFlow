@@ -59,85 +59,67 @@ git clone https://github.com/yourusername/algorvis.git
 cd algorvis/algorvis
 npm install # or yarn install
 npm run dev # or yarn dev
+```
 Then open http://localhost:5173 to see AlgorVis in action!
 
-Building for Production
-bash
+### Building for Production
+```bash
 npm run build
 npm run preview
-📖 How to Use AlgorVis
-Select an Algorithm From the dropdown: sorting, searching, or tree algorithms.
+```
+### 📖 How to Use AlgorVis
+***Select an Algorithm From the dropdown: sorting, searching, or tree algorithms.***
 
-Input Your Data
+- Input Your Data
+    Example: 64, 34, 25, 12, 22, 11, 90
+- Or use "Randomise"
+- Tips appear based on selected algorithm
 
-Example: 64, 34, 25, 12, 22, 11, 90
+### Start Visualisation
 
-Or use "Randomise"
+- Click "Visualise" to begin animation
+- Use playback controls to explore
+- Watch real-time descriptions update
 
-Tips appear based on selected algorithm
+***Learn and Explore***
+- Review time/space complexity
+- Export key visualisations
+- Try varied input sizes
 
-Start Visualisation
+### 🧠 Educational Value
 
-Click "Visualise" to begin animation
+***For Students***
+- Visual Learning
+- Step-by-Step Understanding
+- Comparative Efficiency
+- Interactive Exploration
 
-Use playback controls to explore
+***For Educators***
+- Classroom Ready
+- Export Capabilities
+- Engagement Tool
+- Self-Paced Discovery
 
-Watch real-time descriptions update
+***For Professionals***
+- Interview Preparation
+- Concept Refresher
+- Teaching Tool
 
-Learn and Explore
+### 🏗️ Architecture & Technology
 
-Review time/space complexity
+- Frontend Stack
+- React 19.1.0
+- Vite
+- CSS3
+- ES6+ Modules
 
-Export key visualisations
+***Key Design Patterns***
+- Component Composition
+- State Management via Hooks
+- Dynamic Imports & Code Splitting
+- Error Boundaries
 
-Try varied input sizes
-
-🧠 Educational Value
-For Students
-Visual Learning
-
-Step-by-Step Understanding
-
-Comparative Efficiency
-
-Interactive Exploration
-
-For Educators
-Classroom Ready
-
-Export Capabilities
-
-Engagement Tool
-
-Self-Paced Discovery
-
-For Professionals
-Interview Preparation
-
-Concept Refresher
-
-Teaching Tool
-
-🏗️ Architecture & Technology
-Frontend Stack
-React 19.1.0
-
-Vite
-
-CSS3
-
-ES6+ Modules
-
-Key Design Patterns
-Component Composition
-
-State Management via Hooks
-
-Dynamic Imports & Code Splitting
-
-Error Boundaries
-
-File Structure
+### File Structure
 src/
 ├── components/          # UI modules
 │   ├── Canvas.jsx       # Visualisation canvas
@@ -151,41 +133,32 @@ src/
 └── utils/
     ├── algorithmInfo.js
     └── validateFrames.js
-🛣️ Roadmap
-Immediate Additions
-Dijkstra’s, A*, Bellman-Ford
 
-AVL Trees, Red-Black Trees, B-Trees
+### 🛣️ Roadmap
+***Immediate Additions***
+- Dijkstra’s, A*, Bellman-Ford
+- AVL Trees, Red-Black Trees, B-Trees
+- Dynamic Programming (Fibonacci, Knapsack, LCS)
 
-Dynamic Programming (Fibonacci, Knapsack, LCS)
+***Enhanced Features***
+- Custom Algorithm Upload
+- Performance Benchmarking
+- 3D Visualisations
 
-Enhanced Features
-Custom Algorithm Upload
+***Collaborative Sessions***
+- Platform Improvements
+- Native Mobile Apps
+- Offline Mode
+- Multi-language Support
 
-Performance Benchmarking
+***Full Accessibility Enhancements***
 
-3D Visualisations
+- 🐛 Bug Reports
 
-Collaborative Sessions
+- 💡 Feature Requests
 
-Platform Improvements
-Native Mobile Apps
+- 🔧 Code Submissions
 
-Offline Mode
+- 📚 Documentation
 
-Multi-language Support
-
-Full Accessibility Enhancements
-
-🤝 Contributing
-Join the mission! Contributions welcome:
-
-🐛 Bug Reports
-
-💡 Feature Requests
-
-🔧 Code Submissions
-
-📚 Documentation
-
-🎨 UX Enhancements
+- 🎨 UX Enhancements
