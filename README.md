@@ -1,4 +1,4 @@
-<!-- AlgorVis is an interactive, educational platform that brings algorithms to life through stunning visual animations. Whether you're a student learning computer science fundamentals or an educator teaching complex algorithmic concepts, AlgorVis transforms abstract computational processes into engaging, step-by-step visual experiences.
+AlgorVis is an interactive, educational platform that brings algorithms to life through stunning visual animations. Whether you're a student learning computer science fundamentals or an educator teaching complex algorithmic concepts, AlgorVis transforms abstract computational processes into engaging, step-by-step visual experiences.
 🌟 Features
 🔄 Comprehensive Algorithm Coverage
 
@@ -162,4 +162,4 @@ Platform Improvements
  Mobile App: Native iOS and Android applications
  Offline Mode: Download algorithms for offline learning
  Multi-language Support: Internationalisation for global accessibility
- Accessibility Enhancements: Full screen reader and keyboard support -->
+ Accessibility Enhancements: Full screen reader and keyboard support
