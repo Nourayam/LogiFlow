@@ -5,6 +5,9 @@ import * as quickSort from './algorithms/quickSort';
 import * as bfs from './algorithms/bfs';
 import * as dfs from './algorithms/dfs';
 import * as treeOps from './algorithms/treeOps';
+import * as insertionSort from './algorithms/insertionSort';
+import * as heapSort from './algorithms/heapSort';
+import * as selectionSort from './algorithms/selectionSort';
 import Canvas from './components/Canvas';
 import Controls from './components/Controls';
 import InputPanel from './components/InputPanel';
@@ -20,6 +23,10 @@ const ALGORITHMS = {
   'Breadth-First Search': bfs,
   'Depth-First Search': dfs,
   'Binary Tree Operations': treeOps,
+  'Insertion Sort': insertionSort,
+  'Heap Sort': heapSort,
+  'Selection Sort': selectionSort
+  
 };
 
 function App() {
