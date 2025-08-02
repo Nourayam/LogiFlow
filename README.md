@@ -1,6 +1,6 @@
-# 🧮 AlgorVis
+# 🧮 LogiFlow
 
-AlgorVis is an interactive, educational platform that brings algorithms to life through stunning visual animations. Whether you're a student learning computer science fundamentals or an educator teaching complex algorithmic concepts, AlgorVis transforms abstract computational processes into engaging, step-by-step visual experiences.
+LogiFlow is an interactive, educational platform that brings algorithms to life through stunning visual animations. Whether you're a student learning computer science fundamentals or an educator teaching complex algorithmic concepts, LogiFlow transforms abstract computational processes into engaging, step-by-step visual experiences.
 
 ---
 
@@ -55,19 +55,19 @@ AlgorVis is an interactive, educational platform that brings algorithms to life 
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/algorvis.git
-cd algorvis/algorvis
+git clone https://github.com/yourusername/logiflow.git
+cd logiflow/logiflow
 npm install # or yarn install
 npm run dev # or yarn dev
 ```
-Then open http://localhost:5173 to see AlgorVis in action!
+Then open http://localhost:5173 to see LogiFlow in action!
 
 ### Building for Production
 ```bash
 npm run build
 npm run preview
 ```
-### 📖 How to Use AlgorVis
+### 📖 How to Use LogiFlow
 ***Select an Algorithm From the dropdown: sorting, searching, or tree algorithms.***
 
 - Input Your Data

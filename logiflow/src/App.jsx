@@ -184,7 +184,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>AlgorVis - Your Algorithm Visualiser</h1>
+      <h1>LogiFlow - Your Algorithm Visualiser</h1>
       <div className="main-container">
         <InputPanel
           selectedAlgorithm={selectedAlgorithm}
