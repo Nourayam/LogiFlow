@@ -35,7 +35,7 @@ body {
 }
 
 .app-header {
-  text-align: centre;
+  text-align: center;
   padding: 2rem 0;
   border-bottom: 2px solid var(--border-colour);
   margin-bottom: 2rem;
@@ -51,10 +51,33 @@ body {
   margin-bottom: 0.5rem;
 }
 
-.app-header p {
+.app-header .subtitle {
   color: var(--text-secondary);
   font-size: 1.2rem;
+  font-style: italic;
+  margin: 0;
+  letter-spacing: 0.5px;
 }
+
+/* subtle animation */
+.app-header .subtitle {
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
 
 .app-main {
   display: grid;
