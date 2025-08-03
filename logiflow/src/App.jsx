@@ -14,7 +14,7 @@ import InputPanel from './components/InputPanel';
 import { ALGORITHM_INFO } from './utils/algorithmInfo';
 import { validateFrames } from './utils/validateFrames';
 import Loader from './components/Loader';
-import './index.css';
+import './App.css'; // Change this from index.css
 
 const ALGORITHMS = {
   'Bubble Sort': bubbleSort,
@@ -26,7 +26,6 @@ const ALGORITHMS = {
   'Insertion Sort': insertionSort,
   'Heap Sort': heapSort,
   'Selection Sort': selectionSort
-
 };
 
 function App() {
@@ -57,7 +56,6 @@ function App() {
           throw new Error('Algorithm returned no frames');
         }
 
-        // Validate frames before setting them
         const validatedFrames = validateFrames(newFrames, selectedAlgorithm);
         setFrames(validatedFrames);
         setFrameIndex(0);
@@ -184,49 +182,59 @@ function App() {
 
   return (
     <div className="app">
-      <h1>LogiFlow - Code in Motion </h1>
-      <p className="subtitle">Visualising complexity, one step at a time</p>
-      <div className="main-container">
-        <InputPanel
-          selectedAlgorithm={selectedAlgorithm}
-          setSelectedAlgorithm={setSelectedAlgorithm}
-          inputArray={inputArray}
-          setInputArray={setInputArray}
-          algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
-          isGeneratingFrames={isGeneratingFrames}
-        />
-        
-        {isGeneratingFrames ? (
-          <div className="loading-overlay">
-            <Loader />
-            <p>Generating visualisation frames...</p>
-          </div>
-        ) : (
-          <Canvas
-            frame={frames[frameIndex] || {}}
-            algorithm={selectedAlgorithm}
-            frameIndex={frameIndex}
-            totalFrames={frames.length}
+      {/* ✅ FIXED: Proper header structure matching CSS */}
+      <header className="app-header">
+        <h1>🔥 LogiFlow</h1>
+        <h2 className="subtitle">Visualising complexity, one step at a time</h2>
+      </header>
+
+      {/* ✅ FIXED: Proper main structure matching CSS */}
+      <main className="app-main">
+        <div className="sidebar">
+          <InputPanel
+            selectedAlgorithm={selectedAlgorithm}
+            setSelectedAlgorithm={setSelectedAlgorithm}
+            inputArray={inputArray}
+            setInputArray={setInputArray}
             algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
-            error={error}
+            isGeneratingFrames={isGeneratingFrames}
           />
-        )}
+        </div>
         
-        <Controls
-          isPlaying={isPlaying}
-          onPlayPause={handlePlayPause}
-          onStepForward={handleStepForward}
-          onStepBackward={handleStepBackward}
-          onReset={handleReset}
-          speed={1000 - speedMs}
-          onSpeedChange={handleSpeedChange}
-          frameIndex={frameIndex}
-          totalFrames={frames.length}
-          onExport={handleExport}
-          onImport={handleImport}
-          isGeneratingFrames={isGeneratingFrames}
-        />
-      </div>
+        <div className="visualisation-area">
+          {isGeneratingFrames ? (
+            <div className="loading-overlay">
+              <Loader />
+              <p>Generating visualisation frames...</p>
+            </div>
+          ) : (
+            <>
+              <Canvas
+                frame={frames[frameIndex] || {}}
+                algorithm={selectedAlgorithm}
+                frameIndex={frameIndex}
+                totalFrames={frames.length}
+                algorithmInfo={ALGORITHM_INFO[selectedAlgorithm]}
+                error={error}
+              />
+              <Controls
+                isPlaying={isPlaying}
+                onPlayPause={handlePlayPause}
+                onStepForward={handleStepForward}
+                onStepBackward={handleStepBackward}
+                onReset={handleReset}
+                speed={1000 - speedMs}
+                onSpeedChange={handleSpeedChange}
+                frameIndex={frameIndex}
+                totalFrames={frames.length}
+                onExport={handleExport}
+                onImport={handleImport}
+                isGeneratingFrames={isGeneratingFrames}
+              />
+            </>
+          )}
+        </div>
+      </main>
     </div>
   );
 }
