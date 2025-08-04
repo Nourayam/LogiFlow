@@ -1,15 +1,15 @@
 :root {
-  --primary-color: rgb(255, 255, 255)6, 99, 208, 0.576);
-  --secondary-color: #7209b7;
+  --primary-color: #2c094a;
+  --secondary-color: #0b0235;
   --accent-color: #f72585;
-  --background-dark: rgb(1, 5, 43);
-  --background-light: #100033a2;
+  --background-dark: #14013b;
+  --background-light: #0502377f;
   --text-primary: #ffffff;
-  --text-secondary: #b8b8b8;
-  --success-color: #06ff2b;
-  --warning-color: #ffbe0b;
-  --error-color: #ff006e;
-  --border-colour: #333;
+  --text-secondary: #d7b1ff;
+  --success-color: #77ff00;
+  --warning-color: #ff0b0b;
+  --error-color: #ff0000;
+  --border-colour: #333333;
 }
 
 * {
@@ -43,7 +43,7 @@ body {
 
 .app-header h1 {
   font-size: 3rem;
-  text-shadow: 0 0 40px rgba(135, 140, 228, 0.549);
+  text-shadow: 0 0 7px rgba(132, 0, 255, 0.383);
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -53,11 +53,11 @@ body {
 
 .app-header .subtitle {
   color: var(--text-secondary);
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-style: italic;
   font-weight: 300;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   animation: fadeInUp 0.8s ease-out 0.3s both;
 }
 
@@ -98,7 +98,6 @@ body {
   min-height: 600px;
 }
 
-/* ✅ ADDED: Loading overlay styling */
 .loading-overlay {
   display: flex;
   flex-direction: column;
@@ -111,7 +110,7 @@ body {
 .loading-overlay p {
   margin-top: 1rem;
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 /* Responsive Design */

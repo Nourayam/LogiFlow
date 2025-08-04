@@ -29,7 +29,7 @@
 /* Fix dropdown options styling */
 .form-group select option {
   background: var(--background-dark);
-  color: black;
+  color: rgb(255, 255, 255);
   padding: 0.5rem;
   border: none;
 }
@@ -84,8 +84,10 @@
   background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
   border: none;
   color: white;
-  padding: 0.75rem;
-  border-radius: 8px;
+  font-style: oblique;
+  font-size: 1.0rem;
+  padding: 0.9rem;
+  border-radius: 7px;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.2s ease;
@@ -93,7 +95,7 @@
 
 .button-group button:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(76, 201, 240, 0.3);
+  box-shadow: 0 2px 8px rgba(76, 202, 240, 0.547);
 }
 
 .button-group button:disabled {
